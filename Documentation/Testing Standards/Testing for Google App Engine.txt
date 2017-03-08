@@ -1,0 +1,6 @@
+For testing with Google App Engine, we will be utilizing JUnit in Eclipse. JUnit will allow for both
+unit and functional testing for all Java code. We will be following the coding convention for this 
+by http://www.oracle.com/technetwork/java/javase/documentation/codeconventions-141388.html#475 
+and utlizing the tutorial and guidelines set by Google from 
+https://cloud.google.com/appengine/docs/java/tools/localunittesting
+for testing. 

@@ -1,0 +1,16 @@
+This website includes all of the commands generally used for git in a Linux setting...
+https://confluence.atlassian.com/bitbucketserver/basic-git-commands-776639767.html 
+
+git clone username@host:/path/to/repository ... To start repo
+
+git add <filename>
+
+git add *           ... Both used to get files ready to be pushed.
+
+git commit -m "Commit message"    ...   Used to commit to repository 
+
+git push origin master 		... Push to repository and update.
+
+git pull 			... pull new changes...
+
+If not using Linux, will be using the desktop app provided by GitHub.

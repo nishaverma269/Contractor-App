@@ -1,0 +1,4 @@
+For testing of the AngularJS code, we will be utilizing Karma and Jasimine where Karma is a mock
+server and Jasmine allows for creating asserts for testing. We will be follow the testing tutorial 
+and standards set by https://docs.angularjs.org/guide/unit-testing while also following the coding
+conventions set by https://github.com/mgechev/angularjs-style-guide/blob/master/README.md

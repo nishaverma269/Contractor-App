@@ -1,0 +1,2 @@
+For use with conjunction of the Google App Engine, we will be using standards for Java from 
+Oracle from http://www.oracle.com/technetwork/java/javase/documentation/codeconvtoc-136057.html
