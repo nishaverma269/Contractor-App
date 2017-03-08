@@ -1,0 +1,70 @@
+<html>
+<body ng-controller="ContractorCtrl">
+<nav class="navbar navbar-inverse">
+	<div class="container-fluid">
+		<div class="navbar-header">
+		    <a class="navbar-brand">Site Access Checkpoint</a>
+		</div>
+		<ul class="nav navbar-nav">
+		    <li><a href="#">Home</a></li>
+			<li><a href="#/contractorLogin">Contractor</a></li>
+			<li><a href="#/contractorAdmin">Admin</a></li>
+		</ul>
+	</div>
+</nav>
+
+<div class="row">
+    <div class="container">
+        <div class="col-md-6">
+            <form role="form" name="contractorForm" ng-submit="contractorLogin()" novalidate="">
+                <legend>Contractor's Login</legend>
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label for="company">Company</label>
+                            <select class="form-control" ng-model="contractor.company" >
+                                <option disabled selected>Choose your option</option>
+                                <option>Kellog</option>
+                                <option>Meijer</option>
+                                <option>CSM</option>
+                            </select>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error': contractorForm.pin.$invalid && contractorForm.pin.$touched}">
+                            <label for="pin">PIN</label>
+                            <input type="text" name="pin" class="form-control" placeholder="Pin" ng-model="contractor.pin" ng-minlength="1" required=""> <small class="help-block" ng-show="contractorForm.pin.$error.minlength && contractorForm.pin.$touched">Please enter a valid PIN.</small> </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary" ng-disabled="contractorForm.$invalid">Login</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <form role="form" name="contractorForm" ng-submit="contractorLogout()" novalidate="">
+                <legend>Contractor's Logout</legend>
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label for="company">Company</label>
+                            <select class="form-control" ng-model="contractor.company" >
+                                <option disabled selected>Choose your option</option>
+                                <option>Kellog</option>
+                                <option>Meijer</option>
+                                <option>CSM</option>
+                            </select>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error': contractorForm.pin.$invalid && contractorForm.pin.$touched}">
+                            <label for="pin">PIN</label>
+                            <input type="text" name="pin" class="form-control" placeholder="Pin" ng-model="contractor.pin" ng-minlength="1" required=""> <small class="help-block" ng-show="contractorForm.pin.$error.minlength && contractorForm.pin.$touched">Please enter a valid PIN.</small> </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary" ng-disabled="contractorForm.$invalid">LogOut</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+         <br><h1 align="center">NOT FUNCTIONAL YET</h1>
+    </div>
+</div>
+</body>
+</html>

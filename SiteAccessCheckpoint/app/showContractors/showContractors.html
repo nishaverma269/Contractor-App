@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>WebApp Home Page</title>
+</head>
+<body ng-controller="showContractorsCtrl">
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header"> <a href="#/home" class="navbar-brand">Home</a> </div>
+        <ul class="nav navbar-nav">
+            <li><a href="#/addContractor">Create Contractors</a></li>
+            <li><a href="#/showContractors">Show Contractors</a></li>
+            <li><a href="#/reports">Reports</a></li>
+            <li><a href="#/adminSettings">Settings</a></li>
+            <li ng-click="logout()"><a href="#">Logout</a></li>
+        </ul>
+    </div>
+</nav>
+		
+<div class="container">
+<form role="form" name="searchByCompanyForm" novalidate="">
+  <div class="form-group col-md-6 col-md-offset-3">
+        <label for="searchByCompany">Searching By Company</label>
+        <input type="text" name="searchByCompany" ng-model="contractorData.companyName" required=""/>
+    </div>
+    <div class="col-md-6 col-md-offset-3">
+        <button type="submit" ng-click="searchCompany()">Search Company</button>
+    </div>
+</form>
+</div>
+<div class="container">
+<form role="form" name="searchByContractorNameForm" novalidate="">
+  <div class="form-group col-md-6 col-md-offset-3">
+        <label for="searchByContractorName">Searching By Name</label>
+        <input type="text" name="searchByContractorName" ng-model="contractorData.contractorName" required=""/>
+    </div>
+    <div class="col-md-6 col-md-offset-3">
+        <button type="submit" ng-click="searchName()">Search Name</button>
+    </div>
+</form>
+</div>
+
+
+
+
+<div class="container">
+<div class="row" ng-repeat="contractor in contractors">
+    <div class="col-md-12 well well-sm">
+        <h4>Name:{{contractor.name}}</h4>
+        <p>Company:{{contractor.company}}</p>
+        <p>PIN:{{contractor.pin}}</p>
+        <div ng-switch={{contractor.logStatus}}>
+            <div ng-switch-when=0>
+                <p>Not Logged In</p>
+            </div>
+            <div ng-switch-when=1>
+                <p>Logged In</p>
+            </div>
+            <div ng-switch-default>
+                <p>Status Unknown</p>
+
+            </div>
+        </div>
+        <button type="submit" class="btn btn-sm btn-primary" ng-click="editContractor(contractor.$id)" data-target="#editModal" data-toggle="modal">Edit</button>
+        <button type="submit" class="btn btn-sm btn-danger" ng-click="deleteCnf(contractor)" data-target="#deleteModal" data-toggle="modal">Delete</button>
+
+    </div>
+</div>
+</div>
+<div class="container">
+<div id="editModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Edit Contractor Details</h4>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" name="name" class="form-control" ng-model="editContractorData.name" />
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Company</label>
+                        <input type="text" name="company" class="form-control" ng-model="editContractorData.company" />
+                    </div>
+                    <div class="form-group">
+                        <label for="pin">PIN</label>
+                        <input type="text" name="pin" class="form-control" ng-model="editContractorData.pin" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-primary" ng-click="updateContractor(editContractorData.$id)">Update Contractor</button>
+                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="container">
+<div id="deleteModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header"></div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this contractor?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-danger" ng-click="finalizeDelete(deleteContractor)">Delete</button>
+                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+</body>
+
+</html>

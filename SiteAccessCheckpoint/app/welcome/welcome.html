@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>WebApp Home Page</title>
+</head>
+<body ng-controller="WelcomeCtrl">
+
+<nav class="navbar navbar-inverse">
+	<div class="container-fluid">
+		<div class="navbar-header">
+		    <a class="navbar-brand">Site Access Checkpoint</a>
+		</div>
+		<ul class="nav navbar-nav">
+		    <li><a href="#">Home</a></li>
+			<li><a href="#/contractorLogin">Contractor</a></li>
+			<li><a href="#/contractorAdmin">Admin</a></li>
+		</ul>
+	</div>
+</nav>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-12" id="bg">
+			<h3>Welcome Home {{username}}!</h3>
+			<h4>Current Date {{date | date:'MM-dd-yyyy'}}</h4>
+		</div>
+	</div>
+</div>
+</body>
+</html>
