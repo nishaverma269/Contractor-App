@@ -1,2 +1,2 @@
 In each module, the brief description will be given of that module i.e Input, Output, Functionality, other modules used etc.
-Also, commenting will be done for any specifie function or special functionality such as authentication code.
+Also, commenting will be done for any specific function or special functionality such as authentication code.
