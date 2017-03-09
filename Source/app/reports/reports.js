@@ -9,16 +9,21 @@ angular.module('webApp.reports', ['ngRoute', 'ngCsv', 'ngSanitize', 'firebase'])
     if (!$scope.username) {
         $location.path('/home');
     }
+    $scope.getArray = [];
     var rootRef = firebase.database().ref().child('Contractors');
     $scope.contractors = $firebaseArray(rootRef);
     $scope.currentDate = new Date();
     $scope.contractors.$loaded().then(function () {
         angular.forEach($scope.contractors, function (user) {
-            console.log(user);
-            $scope.getArray = [{
-                a: user.name
-                , b: user.company
-            }];
+            $scope.getArray.push({
+                "creationDate": user.date
+                , "name": user.name
+                , "company": user.company
+                , "pin": user.pin
+                , "loginTime": user.loginTime
+                , "logoutTime": user.logoutTime
+                , "totalHours": user.totalHours
+            });
         })
     });
     $scope.logout = function () {
