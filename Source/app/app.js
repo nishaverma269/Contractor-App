@@ -11,7 +11,7 @@ angular.module('webApp', [
   , 'webApp.reports'
   , 'webApp.showContractors'
   , 'webApp.addContractor'
-  , 'webApp.contractorLogin'
+  , 'webApp.contractorLogin', 'webApp.safetyTraining'
 ]).
 config(['$locationProvider', '$routeProvider', function ($locationProvider, $routeProvider) {
     $routeProvider.otherwise({

@@ -21,15 +21,13 @@
     </div>
     <div class="row row-offcanvas row-offcanvas-right">
         <div class="col-xs-12 col-sm-8">
-            <input type="text" name="searchByCompany" ng-model="contractorData.companyName" required="" />
-            <button type="submit" ng-click="searchCompany()" class="btn btn-primary"> <i class="glyphicon glyphicon-search"></i> Search by Company</button>
-            <input type="text" name="searchByContractorName" ng-model="contractorData.contractorName" required="" />
-            <button type="submit" ng-click="searchName()" class="btn btn-primary"> <i class="glyphicon glyphicon-search"></i> Search by Name </button>
+            <div class="form-group has-feedback">
+                <input class="center-block form-control" type="text" name="searchByCompany" ng-model="contractorData.search" placeholder="Search..." required="" /> <i class="glyphicon glyphicon-search form-control-feedback"></i> </div>
+            <br>
             <div class="table-responsive">
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th>Details</th>
                             <th>Name</th>
                             <th>Company</th>
                             <th>PIN</th>
@@ -37,8 +35,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="contractor in contractors">
-                            <td> <a type="submit" ng-click="editContractor(contractor.$id)" data-target="#editModal" data-toggle="modal">Details</a> </td>
+                        <tr ng-repeat="contractor in contractors | filter: contractorData.search">
                             <td>{{contractor.name}}</td>
                             <td>{{contractor.company}}</td>
                             <td>{{contractor.pin}}</td>
@@ -55,6 +52,7 @@
                                     </div>
                                 </div>
                             </td>
+                            <td> <a type="submit" ng-click="editContractor(contractor.$id)" data-target="#editModal" data-toggle="modal"><span class="glyphicon glyphicon-edit" ></span></a> </td>
                             <td> <a type="submit" ng-click="deleteCnf(contractor)" data-target="#deleteModal" data-toggle="modal"><span class="glyphicon glyphicon-trash" ></span></a> </td>
                         </tr>
                     </tbody>
@@ -108,5 +106,3 @@
         </div>
     </div>
 </body>
-
-</html>

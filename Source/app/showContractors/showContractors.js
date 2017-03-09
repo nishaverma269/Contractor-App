@@ -9,6 +9,7 @@ angular.module('webApp.showContractors', ['ngRoute', 'firebase']).config(['$rout
     $scope.contractorData = {
         companyName: ""
         , contractorName: ""
+        , search: ""
     };
     if (!$scope.username) {
         $location.path('/home');
