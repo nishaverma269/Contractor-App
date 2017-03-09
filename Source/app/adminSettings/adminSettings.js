@@ -4,18 +4,12 @@ angular.module('webApp.adminSettings', ['ngRoute', 'firebase']).config(['$routeP
         templateUrl: 'adminSettings/adminSettings.html'
         , controller: 'adminSettings'
     });
-}])
-
-.controller('adminSettings', ['$scope', '$firebaseArray', '$location', 'CommonProp', function($scope, $firebaseArray, $location, CommonProp){
-
-	$scope.username = CommonProp.getUser();
-
-	if(!$scope.username){
-		$location.path('/home');
-	}
-    
-    $scope.logout = function(){
-		CommonProp.logoutUser();
-	}
+}]).controller('adminSettings', ['$scope', '$firebaseArray', '$location', 'CommonProp', function ($scope, $firebaseArray, $location, CommonProp) {
+    $scope.username = CommonProp.getUser();
+    if (!$scope.username) {
+        $location.path('/home');
+    }
+    $scope.logout = function () {
+        CommonProp.logoutUser();
+    }
 }]);
-

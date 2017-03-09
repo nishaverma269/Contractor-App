@@ -4,7 +4,7 @@ angular.module('webApp.addContractor', ['ngRoute', 'firebase']).config(['$routeP
         templateUrl: 'addContractor/addContractor.html'
         , controller: 'addContractorCtrl'
     });
-}]).controller('addContractorCtrl', ['$scope', '$firebaseArray', '$location', 'CommonProp', function ($scope, $firebaseArray, $location, CommonProp) {
+}]).controller('addContractorCtrl', ['$scope', '$filter', '$firebaseArray', '$location', 'CommonProp', function ($scope, $filter, $firebaseArray, $location, CommonProp) {
     $scope.username = CommonProp.getUser();
     if (!$scope.username) {
         $location.path('/home');
@@ -15,13 +15,15 @@ angular.module('webApp.addContractor', ['ngRoute', 'firebase']).config(['$routeP
         var name = $scope.contractor.name;
         var company = $scope.contractor.company;
         var pin = $scope.contractor.pin;
+        $scope.date = $filter("date")(Date.now(), 'MM-dd-yyyy');
+        var date = $scope.date;
         $scope.contractor.$add({
             name: name
             , company: company
             , pin: pin
             , logStatus: 0
+            , date: date
         }).then(function (ref) {
-            console.log(ref);
             $scope.success = true;
             window.setTimeout(function () {
                 $scope.$apply(function () {
@@ -31,6 +33,9 @@ angular.module('webApp.addContractor', ['ngRoute', 'firebase']).config(['$routeP
         }, function (error) {
             console.log(error);
         });
+        $scope.contractor.name = ''; // reset name 
+        $scope.contractor.company = ''; // reset company
+        $scope.contractor.pin = ''; // reset pin
     };
     $scope.logout = function () {
         CommonProp.logoutUser();
