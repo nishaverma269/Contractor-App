@@ -1,3 +1,4 @@
+
 <html>
 
 <body ng-controller="ContractorCtrl">
@@ -35,11 +36,28 @@
                                 <label for="pin">PIN</label>
                                 <input type="text" name="pin" class="form-control" placeholder="Pin" ng-model="loginPin" ng-minlength="1" required=""> <small class="help-block" ng-show="contractorForm.pin.$error.minlength && contractorForm.pin.$touched">Please enter a valid PIN.</small> </div>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-primary" ng-click="contractorLogin()" ng-disabled="contractorForm.$invalid">Login</button>
+                                <button type="submit" class="btn btn-primary" ng-click="contractorLogin()" data-target="#loginConfirmModal" data-toggle="modal">Login</button>
                             </div>
                         </div>
                     </div>
                 </form>
+            </div>
+            <!-- Modal for confirming the contractors information for login-->
+            <div id="loginConfirmModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4>Confirming Contractor</h4> </div>
+                        <div class="modal-body">
+                            <p>Name: {{contractors.name}}</p>
+                        </div>
+                        <div class="modal-footer">
+                            <p>Does information above looks correct?</p>
+                            <button type="button" class="btn btn-sm btn-primary" ng-click="loginConfirmed()">Yes</button>
+                            <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">No</button>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col-md-6">
                 <form role="form" name="contractorLogoutForm" ng-submit="contractorLogout()" novalidate="">
@@ -59,14 +77,32 @@
                                 <label for="pin">PIN</label>
                                 <input type="text" name="pin" class="form-control" placeholder="Pin" ng-model="logoutPin" ng-minlength="1" required=""> <small class="help-block" ng-show="contractorForm.pin.$error.minlength && contractorForm.pin.$touched">Please enter a valid PIN.</small> </div>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-primary" ng-click="contractorLogout()" ng-disabled="contractorForm.$invalid">LogOut</button>
+                                <button type="submit" class="btn btn-primary" ng-click="contractorLogout()" ng-disabled="contractorForm.$invalid" data-target="#logoutConfirmModal" data-toggle="modal">LogOut</button>
                             </div>
                         </div>
                     </div>
                 </form>
+            </div>
+            <!-- Modal for confirming the contractors information for logout-->
+            <div id="logoutConfirmModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4>Confirming Contractor</h4> </div>
+                        <div class="modal-body">
+                            <p>Name: {{contractors.name}}</p>
+                        </div>
+                        <div class="modal-footer">
+                            <p>Does information above looks correct?</p>
+                            <button type="button" class="btn btn-sm btn-primary" ng-click="logoutConfirmed()">Yes</button>
+                            <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">No</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </body>
 
 </html>
+
