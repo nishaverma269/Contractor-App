@@ -17,21 +17,29 @@ angular.module('webApp.addContractor', ['ngRoute', 'firebase']).config(['$routeP
         var pin = $scope.contractor.pin;
         $scope.date = $filter("date")(Date.now(), 'MM-dd-yyyy');
         var date = $scope.date;
-        $scope.contractor.$add({
-            name: name
-            , company: company
-            , pin: pin
-            , logStatus: 0
-            , date: date
-        }).then(function (ref) {
-            $scope.success = true;
-            window.setTimeout(function () {
-                $scope.$apply(function () {
-                    $scope.success = false;
+        ref.orderByChild("pin").equalTo(pin).once("value", function (snapshot) {
+            var userData = snapshot.val();
+            if (userData) {
+                console.log("exists!")
+            }
+            else {
+                $scope.contractor.$add({
+                    name: name
+                    , company: company
+                    , pin: pin
+                    , logStatus: 0
+                    , date: date
+                }).then(function (ref) {
+                    $scope.success = true;
+                    window.setTimeout(function () {
+                        $scope.$apply(function () {
+                            $scope.success = false;
+                        });
+                    }, 2000);
+                }, function (error) {
+                    console.log(error);
                 });
-            }, 2000);
-        }, function (error) {
-            console.log(error);
+            }
         });
         $scope.contractor.name = ''; // reset name 
         $scope.contractor.company = ''; // reset company
