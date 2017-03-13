@@ -10,7 +10,7 @@ angular.module('webApp', [
   , 'webApp.adminSettings'
   , 'webApp.reports'
   , 'webApp.showContractors'
-  , 'webApp.addContractor'
+  , 'webApp.addContractor', 'webApp.addCompany'
   , 'webApp.contractorLogin', 'webApp.safetyTraining'
 ]).
 config(['$locationProvider', '$routeProvider', function ($locationProvider, $routeProvider) {

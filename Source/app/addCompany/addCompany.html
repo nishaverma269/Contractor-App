@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Add Company Page</title>
+</head>
+
+<body ng-controller="AddCompanyCtrl">
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header"> <a href="#" class="navbar-brand">Site Access Checkpoint</a> </div>
+            <ul class="nav navbar-nav">
+                <!--<li><a href="#/addContractor">Create Contractors</a></li>-->
+                <li><a href="#/showContractors">Show Contractors</a></li>
+                <li><a href="#/reports">Reports</a></li>
+                <li><a href="#/adminSettings">Settings</a></li>
+                <li ng-click="logout()"><a href="#">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div> <a href="#/adminSettings"><span class="glyphicon glyphicon-arrow-left" > Go Back</span></a> </div>
+    <div class="container" ng-show="success">
+        <div class="row">
+            <div class="alert alert-success"> <strong>Success!</strong> The company has beed added. </div>
+        </div>
+    </div>
+    <div class="container">
+        <form role="form" name="companyForm" ng-submit="createCompany()" novalidate="">
+            <legend>Create Company</legend>
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group" ng-class="{'has-error': companyForm.titleTxt.$invalid && companyForm.titleTxt.$touched}">
+                        <label for="titleTxt">Company Name</label>
+                        <input type="text" name="titleTxt" class="form-control" placeholder="Company" ng-model="company.titleTxt" ng-minlength="1" required=""> <small class="help-block" ng-show="companyForm.titleTxt.$error.minlength && companyForm.titleTxt.$touched">Please enter a valid Company Name.</small> </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" ng-disabled="companyForm.$invalid">Add Company</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
