@@ -12,7 +12,7 @@ angular.module('webApp.register', ['ngRoute', 'firebase']).config(['$routeProvid
             var auth = $firebaseAuth();
             auth.$createUserWithEmailAndPassword(username, password).then(function () {
                 console.log("User Successfully Created");
-                $location.path('/contractorAdmin');
+                $location.path('/adminSettings');
             }).catch(function (error) {
                 $scope.errMsg = true;
                 $scope.errorMessage = error.message;
