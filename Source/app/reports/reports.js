@@ -10,17 +10,16 @@ angular.module('webApp.reports', ['ngRoute', 'ngCsv', 'ngSanitize', 'firebase'])
         $location.path('/home');
     }
     $scope.getArray = [];
-    var rootRef = firebase.database().ref().child('Contractors');
+    var rootRef = firebase.database().ref().child('LogInformation');
     $scope.contractors = $firebaseArray(rootRef);
     $scope.contractors.$loaded().then(function () {
         angular.forEach($scope.contractors, function (user) {
             $scope.getArray.push({
-                "creationDate": user.date
-                , "name": user.name
+                "name": user.name
                 , "company": user.company
                 , "pin": user.pin
                 , "loginTime": user.loginTime
-                , "logoutTime": user.logoutTime
+                , "logOutTime": user.logoutTime
                 , "totalHours": user.totalHours
             });
         })

@@ -4,7 +4,7 @@ angular.module('webApp.contractorLogin', ['ngRoute', 'firebase', 'ui.bootstrap']
         templateUrl: 'contractorLogin/contractorLogin.html'
         , controller: 'contractorLoginCtrl'
     });
-    }]).controller('contractorLoginCtrl', ['$scope', '$uibModal', 'CommonProp', '$firebaseArray', '$firebaseObject', '$location', function ($scope, $uibModal, CommonProp, $firebaseArray, $firebaseObject, $location) {
+    }]).controller('contractorLoginCtrl', ['$scope', '$filter', '$uibModal', 'CommonProp', '$firebaseArray', '$firebaseObject', '$location', function ($scope, $filter, $uibModal, CommonProp, $firebaseArray, $firebaseObject, $location) {
     $scope.loginPin = "";
     $scope.logoutPin = "";
     $scope.contractorLogin = function () {
@@ -56,6 +56,11 @@ angular.module('webApp.contractorLogin', ['ngRoute', 'firebase', 'ui.bootstrap']
         });
     };
     $scope.loginConfirmed = function () {
+        var logInformation;
+        var loginTime = $filter('date')(new Date(), 'shortTime');
+        var logOutTime = "00-00";
+        var ref = firebase.database().ref().child('LogInformation');
+        logInformation = $firebaseArray(ref);
         var ref = firebase.database().ref();
         ref.child("Contractors").orderByChild("pin").equalTo($scope.loginPin).once("value", function (snapshot) {
             var userData = snapshot.val();
@@ -69,12 +74,14 @@ angular.module('webApp.contractorLogin', ['ngRoute', 'firebase', 'ui.bootstrap']
                         var updateRef = firebase.database().ref().child('Contractors/' + contractor.$id);
                         updateRef.update({
                             logStatus: 1
-                        }).then(function (ref) {
-                            $scope.$apply(function () {
-                                $("#loginConfirmModal").modal('hide');
-                            });
-                        }, function (error) {
-                            console.log(error);
+                        })
+                        logInformation.$add({
+                            name: contractor.name
+                            , company: contractor.company
+                            , pin: contractor.pin
+                            , loginTime: loginTime
+                            , logOutTime: logOutTime
+                            , currentLoginStatus: 1
                         });
                     })
                 });

@@ -28,11 +28,11 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="contractor in contractors">
-                            <td ng-if="contractor.logStatus == '1'">{{contractor.name}}</td>
-                            <td ng-if="contractor.logStatus == '1'">{{contractor.company}}</td>
-                            <td ng-if="contractor.logStatus == '1'">{{contractor.loginTime}}</td>
-                            <td ng-if="contractor.logStatus == '1'">{{contractor.logoutTime}}</td>
-                            <td ng-if="contractor.logStatus == '1'">{{contractor.totalHours}}</td>
+                            <td ng-if="contractor.currentLoginStatus == '1'">{{contractor.name}}</td>
+                            <td ng-if="contractor.currentLoginStatus == '1'">{{contractor.company}}</td>
+                            <td ng-if="contractor.currentLoginStatus == '1'">{{contractor.loginTime}}</td>
+                            <td ng-if="contractor.currentLoginStatus == '1'">{{contractor.logoutTime}}</td>
+                            <td ng-if="contractor.currentLoginStatus == '1'">{{contractor.totalHours}}</td>
                         </tr>
                     </tbody>
                 </table>
