@@ -12,7 +12,6 @@ angular.module('webApp.reports', ['ngRoute', 'ngCsv', 'ngSanitize', 'firebase'])
     $scope.getArray = [];
     var rootRef = firebase.database().ref().child('Contractors');
     $scope.contractors = $firebaseArray(rootRef);
-    $scope.currentDate = new Date();
     $scope.contractors.$loaded().then(function () {
         angular.forEach($scope.contractors, function (user) {
             $scope.getArray.push({

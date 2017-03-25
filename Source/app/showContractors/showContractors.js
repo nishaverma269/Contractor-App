@@ -14,6 +14,7 @@ angular.module('webApp.showContractors', ['ngRoute', 'firebase']).config(['$rout
     if (!$scope.username) {
         $location.path('/home');
     }
+    $scope.currentDate = new Date();
     var rootRef = firebase.database().ref().child('Contractors');
     $scope.contractors = $firebaseArray(rootRef);
     /* Edit method for getting contractor's information from firebase database. */
