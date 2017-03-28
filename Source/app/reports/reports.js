@@ -9,6 +9,10 @@ angular.module('webApp.reports', ['ngRoute', 'ngCsv', 'ngSanitize', 'firebase'])
     if (!$scope.username) {
         $location.path('/home');
     }
+    $scope.datepickerConfig = {
+        allowFuture: false
+        , dateFormat: 'MM/DD/YYYY'
+    };
     $scope.getArray = [];
     var rootRef = firebase.database().ref().child('LogInformation');
     $scope.contractors = $firebaseArray(rootRef);
