@@ -1,8 +1,8 @@
 'use strict';
 // Declare app level module which depends on views, and components
 angular.module('webApp', [
-  'ngRoute', 'ngCsv', 'ngSanitize', 'ui.bootstrap'
-  , , 'webApp.home'
+  'ngRoute', 'ngCsv', 'ngSanitize', 'ui.bootstrap', 'angularMoment'
+  , 'webApp.home'
   , 'webApp.register'
   , 'webApp.welcome'
   , 'webApp.addPost'

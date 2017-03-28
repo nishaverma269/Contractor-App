@@ -19,7 +19,7 @@ angular.module('webApp.reports', ['ngRoute', 'ngCsv', 'ngSanitize', 'firebase'])
                 , "company": user.company
                 , "pin": user.pin
                 , "loginTime": user.loginTime
-                , "logOutTime": user.logoutTime
+                , "logOutTime": user.logOutTime
                 , "totalHours": user.totalHours
             });
         })

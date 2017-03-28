@@ -1,10 +1,10 @@
 'use strict';
-angular.module('webApp.contractorLogin', ['ngRoute', 'firebase', 'ui.bootstrap']).config(['$routeProvider', function ($routeProvider) {
+angular.module('webApp.contractorLogin', ['ngRoute', 'angularMoment', 'firebase', 'ui.bootstrap']).config(['$routeProvider', function ($routeProvider) {
     $routeProvider.when('/contractorLogin', {
-        templateUrl: 'contractorLogin/contractorLogin.html',
-        controller: 'contractorLoginCtrl'
+        templateUrl: 'contractorLogin/contractorLogin.html'
+        , controller: 'contractorLoginCtrl'
     });
-    }]).controller('contractorLoginCtrl', ['$scope', '$filter', '$uibModal', 'CommonProp', '$firebaseArray', '$firebaseObject', '$location', function ($scope, $filter, $uibModal, CommonProp, $firebaseArray, $firebaseObject, $location) {
+    }]).controller('contractorLoginCtrl', ['$scope', '$filter', '$uibModal', 'CommonProp', 'moment', '$firebaseArray', '$firebaseObject', '$location', function ($scope, $filter, $uibModal, CommonProp, moment, $firebaseArray, $firebaseObject, $location) {
     $scope.loginPin = "";
     $scope.logoutPin = "";
     $scope.contractorLogin = function () {
@@ -17,12 +17,13 @@ angular.module('webApp.contractorLogin', ['ngRoute', 'firebase', 'ui.bootstrap']
                     $scope.name = value.name;
                     $scope.company = value.company;
                     var modalInstance = $uibModal.open({
-                        component: 'myModal',
-                        controller: "contractorLoginCtrl",
-                        scope: $scope //passed current scope to the modal
+                        component: 'myModal'
+                        , controller: "contractorLoginCtrl"
+                        , scope: $scope //passed current scope to the modal
                     });
                 });
-            } else {
+            }
+            else {
                 $scope.$apply(function () {
                     $("#loginConfirmModal").modal('hide');
                 });
@@ -40,12 +41,13 @@ angular.module('webApp.contractorLogin', ['ngRoute', 'firebase', 'ui.bootstrap']
                     $scope.name = value.name;
                     $scope.company = value.company;
                     var modalInstance = $uibModal.open({
-                        component: 'myModal',
-                        controller: "contractorLoginCtrl",
-                        scope: $scope //passed current scope to the modal
+                        component: 'myModal'
+                        , controller: "contractorLoginCtrl"
+                        , scope: $scope //passed current scope to the modal
                     });
                 });
-            } else {
+            }
+            else {
                 alert("Wrong Pin. Please see Admin!");
                 $scope.$apply(function () {
                     $("#logoutConfirmModal").modal('hide');
@@ -72,20 +74,21 @@ angular.module('webApp.contractorLogin', ['ngRoute', 'firebase', 'ui.bootstrap']
                         var updateRef = firebase.database().ref().child('Contractors/' + contractor.$id);
                         if (contractor.logStatus == 1) {
                             console.log("You're Already Logged in...");
-                        } else {
+                        }
+                        else {
                             updateRef.update({
                                 logStatus: 1
                             })
                             logInformation.$add({
-                                name: contractor.name,
-                                company: contractor.company,
-                                pin: contractor.pin,
-                                loginTime: loginTime,
-                                logOutTime: logOutTime,
-                                currentLoginStatus: 1
+                                name: contractor.name
+                                , company: contractor.company
+                                , pin: contractor.pin
+                                , loginTime: loginTime
+                                , logOutTime: logOutTime
+                                , currentLoginStatus: 1
+                                , totalHours: 0
                             });
                         }
-
                     })
                 });
                 $scope.loginPin = "";
@@ -107,7 +110,8 @@ angular.module('webApp.contractorLogin', ['ngRoute', 'firebase', 'ui.bootstrap']
                         var updateRef = firebase.database().ref().child('Contractors/' + contractor.$id);
                         if (contractor.logStatus == 0) {
                             console.log("You're Already Logged Out!!");
-                        } else {
+                        }
+                        else {
                             updateRef.update({
                                 logStatus: 0
                             }).then(function (ref) {
@@ -120,36 +124,29 @@ angular.module('webApp.contractorLogin', ['ngRoute', 'firebase', 'ui.bootstrap']
                             var rootRefLog = firebase.database().ref().child('LogInformation');
                             var filterRefLog = rootRefLog.orderByChild('pin').equalTo(contractor.pin);
                             $scope.logInformation = $firebaseArray(filterRefLog);
-
                             $scope.logInformation.$loaded().then(function () {
                                 angular.forEach($scope.logInformation, function (logStatuses) {
-
                                     if (logStatuses.currentLoginStatus == 1) {
                                         console.log("Found one");
                                         var logoutTime = $filter('date')(new Date(), 'shortTime');
-                                        var loginTime = new Date();
-                                        console.log(loginTime.getHours() + " " + loginTime.getMinutes());
-                                        //logTest = new Date(1970,0,1,loginTime.getHours(),loginTime.getMinutes(),loginTime.getSeconds());
+                                        var startTime = moment(logStatuses.loginTime, "HH:mm a");
+                                        var endTime = moment(logoutTime, "HH:mm a");
+                                        var duration = moment.duration(endTime.diff(startTime));
+                                        var hours = parseInt(duration.asHours());
+                                        var minutes = parseInt(duration.asMinutes()) - hours * 60;
+                                        var totalHours = hours + 'hr ' + minutes + 'min';
                                         var updateRefLog = firebase.database().ref().child('LogInformation/' + logStatuses.$id);
                                         updateRefLog.update({
-                                            currentLoginStatus: 0,
-                                            logOutTime: logoutTime
-                                        }).then(function (ref) {
-                                      
-                                            
-                                        }, function (error) {
+                                            currentLoginStatus: 0
+                                            , logOutTime: logoutTime
+                                            , totalHours: totalHours
+                                        }).then(function (ref) {}, function (error) {
                                             console.log(error);
                                         });
-
-                                    } 
+                                    }
                                 })
                             });
-
-
-
-
                         }
-
                     })
                 });
                 $scope.logoutPin = "";

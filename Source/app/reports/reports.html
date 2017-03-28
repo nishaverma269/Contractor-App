@@ -31,13 +31,13 @@
                             <td>{{contractor.name}}</td>
                             <td>{{contractor.company}}</td>
                             <td>{{contractor.loginTime}}</td>
-                            <td>{{contractor.logoutTime}}</td>
+                            <td>{{contractor.logOutTime}}</td>
                             <td>{{contractor.totalHours}}</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <button type="submit" ng-csv="getArray" csv-header="['DATE', 'NAME', 'COMPANY', 'PIN', 'LOGIN', 'LOGOUT', 'HOURS']" filename="Reports.csv" class="btn btn-primary center-block"> Save Reports</button>
+            <button type="submit" ng-csv="getArray" csv-header="['NAME', 'COMPANY', 'PIN', 'LOGIN', 'LOGOUT', 'HOURS']" filename="Reports.csv" class="btn btn-primary center-block"> Save Reports</button>
         </div>
     </div>
 </body>
