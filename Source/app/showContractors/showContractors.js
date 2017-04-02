@@ -1,15 +1,20 @@
 'use strict';
 angular.module('webApp.showContractors', ['ngRoute', 'firebase']).config(['$routeProvider', function ($routeProvider) {
     $routeProvider.when('/showContractors', {
-        templateUrl: 'showContractors/showContractors.html'
-        , controller: 'showContractorsCtrl'
+        templateUrl: 'showContractors/showContractors.html',
+        controller: 'showContractorsCtrl'
     });
 }]).controller('showContractorsCtrl', ['$scope', 'CommonProp', '$firebaseArray', '$firebaseObject', '$location', function ($scope, CommonProp, $firebaseArray, $firebaseObject, $location) {
+    $scope.date = "";
+    $scope.datepickerConfig = {
+        allowFuture: true,
+        dateFormat: 'MM/DD/YYYY'
+    };
     $scope.username = CommonProp.getUser();
     $scope.contractorData = {
-        companyName: ""
-        , contractorName: ""
-        , search: ""
+        companyName: "",
+        contractorName: "",
+        search: ""
     };
     if (!$scope.username) {
         $location.path('/home');
@@ -26,9 +31,10 @@ angular.module('webApp.showContractors', ['ngRoute', 'firebase']).config(['$rout
     $scope.updateContractor = function (id) {
         var ref = firebase.database().ref().child('Contractors/' + id);
         ref.update({
-            name: $scope.editContractorData.name
-            , company: $scope.editContractorData.company
-            , pin: $scope.editContractorData.pin
+            name: $scope.editContractorData.name,
+            company: $scope.editContractorData.company,
+            pin: $scope.editContractorData.pin,
+            date: $scope.date
         }).then(function (ref) {
             $scope.$apply(function () {
                 $("#editModal").modal('hide');
@@ -36,6 +42,7 @@ angular.module('webApp.showContractors', ['ngRoute', 'firebase']).config(['$rout
         }, function (error) {
             console.log(error);
         });
+        $scope.date = "";
     };
     /* Delete method */
     $scope.deleteCnf = function (contractor) {
@@ -52,8 +59,7 @@ angular.module('webApp.showContractors', ['ngRoute', 'firebase']).config(['$rout
         var filterRef;
         if ($scope.contractorData.companyName == undefined || $scope.contractorData.companyName === "") {
             $scope.contractors = $firebaseArray(rootRef);
-        }
-        else {
+        } else {
             filterRef = rootRef.orderByChild('company').equalTo($scope.contractorData.companyName);
             $scope.contractors = $firebaseArray(filterRef);
         }
@@ -64,8 +70,7 @@ angular.module('webApp.showContractors', ['ngRoute', 'firebase']).config(['$rout
         var filterRef;
         if ($scope.contractorData.contractorName == undefined || $scope.contractorData.contractorName === "") {
             $scope.contractors = $firebaseArray(rootRef);
-        }
-        else {
+        } else {
             filterRef = rootRef.orderByChild('name').equalTo($scope.contractorData.contractorName);
             $scope.contractors = $firebaseArray(filterRef);
         }

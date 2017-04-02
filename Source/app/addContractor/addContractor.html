@@ -39,6 +39,10 @@
                     <div class="form-group" ng-class="{'has-error': contractorForm.pin.$invalid && contractorForm.pin.$touched}">
                         <label for="pin">PIN</label>
                         <input type="text" name="pin" class="form-control" placeholder="Pin" ng-model="contractor.pin" ng-minlength="1" required=""> <small class="help-block" ng-show="contractorForm.pin.$error.minlength && contractorForm.pin.$touched">Please enter a valid PIN.</small> </div>
+                        <div class ="form-group">
+                             <label for="Safety Training">Safety Training Date</label>
+                            <input type="text" name="date" ng-flat-datepicker datepicker-config="datepickerConfig" ng-model="date">
+                        </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary" ng-disabled="contractorForm.$invalid">Add Contractor</button>
                     </div>

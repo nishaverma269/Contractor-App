@@ -1,5 +1,4 @@
 <html>
-
 <body ng-controller="showContractorsCtrl">
     <!-- To show the navigation bar at the top -->
     <nav class="navbar navbar-inverse">
@@ -42,7 +41,7 @@
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th>Creation Date</th>
+                            <th>Last Safety Training Date</th>
                             <th>Name</th>
                             <th>Company</th>
                             <th>PIN</th>
@@ -86,6 +85,10 @@
                     <div class="modal-body">
                         <form role="form">
                             <div class="form-group">
+                                <label for="Safety Training">Safety Training Date</label>
+                                <input type="text" name="date" ng-flat-datepicker datepicker-config="datepickerConfig" ng-model="date">
+                            </div>
+                            <div class="form-group">
                                 <label for="name">Name</label>
                                 <input type="text" name="name" class="form-control" ng-model="editContractorData.name" /> </div>
                             <div class="form-group">
@@ -94,6 +97,7 @@
                             <div class="form-group">
                                 <label for="pin">PIN</label>
                                 <input type="text" name="pin" class="form-control" ng-model="editContractorData.pin" /> </div>
+
                         </form>
                     </div>
                     <div class="modal-footer">

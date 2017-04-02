@@ -57,6 +57,11 @@ angular.module('webApp.contractorLogin', ['ngRoute', 'angularMoment', 'firebase'
     };
     $scope.loginConfirmed = function () {
         var logInformation;
+        var logoutTime = $filter('date')(new Date(), 'shortTime');
+        var currentDate = new Date();
+        var momentDate = moment(currentDate, 'MM/DD/YYYY');
+       
+        console.log(momentDate.day() + " day " + momentDate.year() + " year ");
         var loginTime = $filter('date')(new Date(), 'shortTime');
         var logOutTime = "00-00";
         var ref = firebase.database().ref().child('LogInformation');
@@ -67,13 +72,21 @@ angular.module('webApp.contractorLogin', ['ngRoute', 'angularMoment', 'firebase'
             if (userData) {
                 var rootRef = firebase.database().ref().child('Contractors');
                 var filterRef;
+            
                 filterRef = rootRef.orderByChild('pin').equalTo($scope.loginPin);
                 $scope.contractors = $firebaseArray(filterRef);
                 $scope.contractors.$loaded().then(function () {
                     angular.forEach($scope.contractors, function (contractor) {
+                        console.log(moment(contractor.date).add(1,'years').year())
                         var updateRef = firebase.database().ref().child('Contractors/' + contractor.$id);
                         if (contractor.logStatus == 1) {
                             console.log("You're Already Logged in...");
+                        }
+                        else if(momentDate.isSame(moment(contractor.date).add(1,'years'),'day')){
+                            console.log("THE SAME");
+                        }
+                        else if(momentDate.isAfter(moment(contractor.date).add(1,'years'),'day')){
+                            console.log("After");
                         }
                         else {
                             updateRef.update({
