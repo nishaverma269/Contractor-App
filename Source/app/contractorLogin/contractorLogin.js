@@ -100,6 +100,7 @@ angular.module('webApp.contractorLogin', ['ngRoute', 'angularMoment', 'firebase'
                                 , logOutTime: logOutTime
                                 , currentLoginStatus: 1
                                 , totalHours: 0
+                                , date: $filter('date')(new Date(), 'MM/dd/yyyy')
                             });
                         }
                     })
