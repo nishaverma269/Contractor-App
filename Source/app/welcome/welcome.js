@@ -5,5 +5,6 @@ angular.module('webApp.welcome', ['ngRoute', 'firebase']).config(['$routeProvide
         , controller: 'WelcomeCtrl'
     });
 }]).controller('WelcomeCtrl', ['$scope', function ($scope) {
+    /* This variable is used to get the current date from the system.*/
     $scope.date = new Date();
 }])

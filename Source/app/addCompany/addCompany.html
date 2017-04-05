@@ -8,9 +8,9 @@
 <body ng-controller="AddCompanyCtrl">
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
+            <!-- This div is used to show the navbar options/tabs at top -->
             <div class="navbar-header"> <a href="#/home" class="navbar-brand">Home</a> </div>
             <ul class="nav navbar-nav">
-                <!--<li><a href="#/addContractor">Create Contractors</a></li>-->
                 <li><a href="#/showContractors">Show Contractors</a></li>
                 <li><a href="#/reports">Reports</a></li>
                 <li><a href="#/adminSettings">Settings</a></li>
@@ -18,12 +18,14 @@
             </ul>
         </div>
     </nav>
+    <!-- This will display success if the query is succeeded to create a new company in database -->
     <div> <a href="#/adminSettings"><span class="glyphicon glyphicon-arrow-left" > Go Back</span></a> </div>
     <div class="container" ng-show="success">
         <div class="row">
             <div class="alert alert-success"> <strong>Success!</strong> The company has beed added. </div>
         </div>
     </div>
+    <!-- This is a form to get user input for adding a company to database-->
     <div class="container">
         <form role="form" name="companyForm" ng-submit="createCompany()" novalidate="">
             <legend>Create Company</legend>

@@ -5,10 +5,12 @@ angular.module('webApp.addCompany', ['ngRoute', 'firebase']).config(['$routeProv
         , controller: 'AddCompanyCtrl'
     });
 }]).controller('AddCompanyCtrl', ['$scope', '$firebaseArray', '$location', 'CommonProp', function ($scope, $firebaseArray, $location, CommonProp) {
+    /* This controller is for adding a company to database.*/
     $scope.username = CommonProp.getUser();
     if (!$scope.username) {
         $location.path('/home');
     }
+    /* Create company method will invode when user press Create button in the view which will use the Company table in the database to add a new company entered by a user.*/
     var ref = firebase.database().ref().child('Company');
     $scope.companies = $firebaseArray(ref);
     $scope.createCompany = function () {

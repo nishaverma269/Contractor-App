@@ -1,4 +1,5 @@
 <html>
+
 <body ng-controller="showContractorsCtrl">
     <!-- To show the navigation bar at the top -->
     <nav class="navbar navbar-inverse">
@@ -13,13 +14,13 @@
             </ul>
         </div>
     </nav>
+    <!--This div will show the current date and total contractors in the system.-->
     <div class="row row-offcanvas row-offcanvas-right">
         <div class="col-xs-12 col-sm-8">
             <p align="center">{{currentDate | date:'medium'}}</p>
             <h3 align="center">Total Contractors: {{contractors.length}}</h3>
             <br> </div>
     </div>
-    <!-- This container will get the data and show all contractors using ng-repeat -->
     <div class="row">
         <div class="col-lg-12">
             <div class="col-lg-6">
@@ -32,6 +33,7 @@
             <br>
             <br> </div>
     </div>
+    <!-- This container will get the data and show all contractors using ng-repeat -->
     <div class="row row-offcanvas row-offcanvas-right">
         <div class="col-xs-12 col-sm-8">
             <div class="form-group has-feedback">
@@ -86,8 +88,7 @@
                         <form role="form">
                             <div class="form-group">
                                 <label for="Safety Training">Safety Training Date</label>
-                                <input type="text" name="date" ng-flat-datepicker datepicker-config="datepickerConfig" ng-model="date">
-                            </div>
+                                <input type="text" name="date" ng-flat-datepicker datepicker-config="datepickerConfig" ng-model="date"> </div>
                             <div class="form-group">
                                 <label for="name">Name</label>
                                 <input type="text" name="name" class="form-control" ng-model="editContractorData.name" /> </div>
@@ -97,7 +98,6 @@
                             <div class="form-group">
                                 <label for="pin">PIN</label>
                                 <input type="text" name="pin" class="form-control" ng-model="editContractorData.pin" /> </div>
-
                         </form>
                     </div>
                     <div class="modal-footer">

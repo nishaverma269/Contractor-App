@@ -12,16 +12,18 @@
     <title>My AngularJS App</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Link to all the css files.-->
     <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
     <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
     <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="./node_modules/ng-flat-datepicker/dist/ng-flat-datepicker.min.css">
     <link rel="stylesheet" href="app.css">
+    <!--Path to use the builtin libraries-->
     <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.7.0/firebase.js"></script>
     <script>
-        // Initialize Firebase
+        // Initialize Firebase for cloud database
         var config = {
             apiKey: "AIzaSyCbP7xsg-sFYl6DA2xximQSHN4xRtkKea0"
             , authDomain: "webapp-30212.firebaseapp.com"
@@ -35,6 +37,7 @@
 
 <body>
     <div ng-view></div>
+    <!--Scripts to use custom as well as builtin .js files-->
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/ng-csv/build/ng-csv.min.js"></script>

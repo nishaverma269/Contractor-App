@@ -9,23 +9,26 @@ angular.module('webApp.contractorAdmin', ['ngRoute', 'firebase']).config(['$rout
     if ($scope.username) {
         $location.path('/home');
     }
+    /*Signin method to sign in Admin*/
     $scope.signIn = function () {
-        var username = $scope.user.email;
-        var password = $scope.user.password;
-        var auth = $firebaseAuth();
-        auth.$signInWithEmailAndPassword(username, password).then(function () {
-            console.log("User Login Successful");
-            CommonProp.setUser($scope.user.email);
-            $location.path('/home');
-        }).catch(function (error) {
-            $scope.errMsg = true;
-            $scope.errorMessage = error.message;
-        });
-    }
+            var username = $scope.user.email;
+            var password = $scope.user.password;
+            var auth = $firebaseAuth();
+            auth.$signInWithEmailAndPassword(username, password).then(function () {
+                console.log("User Login Successful");
+                CommonProp.setUser($scope.user.email);
+                $location.path('/home');
+            }).catch(function (error) {
+                $scope.errMsg = true;
+                $scope.errorMessage = error.message;
+            });
+        }
+        /* This is used to logout Admin from the system*/
     $scope.logout = function () {
         CommonProp.logoutUser();
     }
 }]).service('CommonProp', ['$location', '$firebaseAuth', function ($location, $firebaseAuth) {
+    /*Builtin service in angular js for the authentication in firebase.*/
     var user = "";
     var auth = $firebaseAuth();
     return {
