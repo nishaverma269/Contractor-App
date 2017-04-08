@@ -1,7 +1,7 @@
 'use strict';
 // Declare app level module which depends on views, and components
 angular.module('webApp', [
-  'ngRoute', 'ngCsv', 'ngSanitize', 'ui.bootstrap', 'angularMoment', 'ngFlatDatepicker'
+  'ngRoute', 'ngCsv','ngSanitize', 'ui.bootstrap', 'angularMoment', 'ngFlatDatepicker'
   , 'webApp.home'
   , 'webApp.register'
   , 'webApp.welcome'

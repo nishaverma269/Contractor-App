@@ -10,7 +10,7 @@ angular.module('webApp.addCompany', ['ngRoute', 'firebase']).config(['$routeProv
     if (!$scope.username) {
         $location.path('/home');
     }
-    /* Create company method will invode when user press Create button in the view which will use the Company table in the database to add a new company entered by a user.*/
+    /* Create company method will invoke when user press Create button in the view which will use the Company table in the database to add a new company entered by a user.*/
     var ref = firebase.database().ref().child('Company');
     $scope.companies = $firebaseArray(ref);
     $scope.createCompany = function () {

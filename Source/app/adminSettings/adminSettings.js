@@ -11,11 +11,6 @@ angular.module('webApp.adminSettings', ['ngRoute', 'ngCsv', 'ngSanitize', 'fireb
         $scope.user.updateEmail($scope.editData.email).then(function () {}, function (error) {
             console.log(error);
         });
-        /* $scope.user.sendEmailVerification().then(function () {
-             // Email sent.
-         }, function (error) {
-             // An error happened.
-         });*/
         $scope.user.updatePassword($scope.editData.password).then(function () {
             $scope.$apply(function () {
                 $("#editModal").modal('hide');
@@ -31,7 +26,7 @@ angular.module('webApp.adminSettings', ['ngRoute', 'ngCsv', 'ngSanitize', 'fireb
                 $("#deleteModal").modal('hide');
             });
         }, function (error) {
-            // An error happened.
+             console.log(error);
         });
         $location.path('/contractorAdmin');
     };

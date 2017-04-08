@@ -18,17 +18,13 @@ angular.module('webApp.contractorLogin', ['ngRoute', 'angularMoment', 'firebase'
                     var value = childSnapshot.val();
                     $scope.name = value.name;
                     $scope.company = value.company;
-                    var modalInstance = $uibModal.open({
-                        component: 'myModal'
-                        , controller: "contractorLoginCtrl"
-                        , scope: $scope //passed current scope to the modal
-                    });
                 });
+                alert("Name: " + $scope.name + "\n" + "Company: " + $scope.company);
             }
             else {
-                $scope.$apply(function () {
+              /*  $scope.$apply(function () {
                     $("#loginConfirmModal").modal('hide');
-                });
+                });*/
                 alert("Doesn't exist. Please see Admin");
             }
         });
@@ -43,18 +39,19 @@ angular.module('webApp.contractorLogin', ['ngRoute', 'angularMoment', 'firebase'
                     var value = childSnapshot.val();
                     $scope.name = value.name;
                     $scope.company = value.company;
-                    var modalInstance = $uibModal.open({
+                    /*var modalInstance = $uibModal.open({
                         component: 'myModal'
                         , controller: "contractorLoginCtrl"
                         , scope: $scope //passed current scope to the modal
-                    });
+                    });*/
                 });
+                alert("Name: " + $scope.name + "\n" + "Company: " + $scope.company);
             }
             else {
                 alert("Wrong Pin. Please see Admin!");
-                $scope.$apply(function () {
+              /*  $scope.$apply(function () {
                     $("#logoutConfirmModal").modal('hide');
-                });
+                });*/
             }
         });
     };

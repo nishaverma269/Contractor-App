@@ -15,7 +15,9 @@
     </nav>
     <div class="row row-offcanvas row-offcanvas-right">
         <div class="col-xs-12 col-sm-8">
-            <input readonly type="text" name="date" ng-flat-datepicker datepicker-config="datepickerConfig" ng-model="date">
+<!--            <input readonly type="text" name="date" ng-flat-datepicker datepicker-config="datepickerConfig" ng-model="date" >-->
+           <!-- <button ng-model="date" ng-flat-datepicker datepicker-config="datepickerConfig" class="glyphicon glyphicon-calendar"></button>-->
+           <p>Pick a date  <button class="center-block form-control" name="date" ng-flat-datepicker datepicker-config="datepickerConfig" ng-model="date" >{{date | date:'MM/dd/yyyy'}}</button></p>
             <button type="submit" class="btn btn-primary" ng-click="rangeDate()">From Selected Date to Current Date</button>
             <button type="submit" class="btn btn-primary" ng-click="specificDate()">Specific Date</button>
             <div class="table-responsive">

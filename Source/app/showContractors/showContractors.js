@@ -4,11 +4,11 @@ angular.module('webApp.showContractors', ['ngRoute', 'firebase']).config(['$rout
         templateUrl: 'showContractors/showContractors.html',
         controller: 'showContractorsCtrl'
     });
+    
 }]).controller('showContractorsCtrl', ['$scope', 'CommonProp', '$firebaseArray', '$firebaseObject', '$location', function ($scope, CommonProp, $firebaseArray, $firebaseObject, $location) {
-    $scope.date = "";
+    $scope.date = new Date();
     $scope.datepickerConfig = {
-        allowFuture: true,
-        dateFormat: 'MM/DD/YYYY'
+        allowFuture: false
     };
     $scope.username = CommonProp.getUser();
     $scope.contractorData = {
@@ -42,7 +42,6 @@ angular.module('webApp.showContractors', ['ngRoute', 'firebase']).config(['$rout
         }, function (error) {
             console.log(error);
         });
-        $scope.date = "";
     };
     /* Delete method */
     $scope.deleteCnf = function (contractor) {

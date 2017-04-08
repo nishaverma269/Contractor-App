@@ -10,12 +10,11 @@ angular.module('webApp.reports', ['ngRoute', 'ngCsv', 'ngSanitize', 'firebase'])
         $location.path('/home');
     }
     $scope.datepickerConfig = {
-        allowFuture: false,
-        dateFormat: 'MM/DD/YYYY'
+        allowFuture: false
     };
 
     $scope.getArray = [];
-    $scope.date = $filter('date')(new Date(), 'MM/dd/yyyy');
+    $scope.date = new Date();
     var selectedDate = moment($scope.date, 'MM/DD/YYYY');
     var rootRef = firebase.database().ref().child('LogInformation');
     $scope.contractors = $firebaseArray(rootRef);
@@ -40,9 +39,10 @@ angular.module('webApp.reports', ['ngRoute', 'ngCsv', 'ngSanitize', 'firebase'])
         })
     });
     $scope.rangeDate = function () {
-        var selectedDate = moment($scope.date, 'MM/DD/YYYY');
+        var selectedDate = moment($scope.date);
         $scope.getArray = [];
-
+        console.log(selectedDate);
+        console.log($scope.date);
         var rootRef = firebase.database().ref().child('LogInformation');
         $scope.contractors = $firebaseArray(rootRef);
         $scope.contractors.$loaded().then(function () {
@@ -65,7 +65,7 @@ angular.module('webApp.reports', ['ngRoute', 'ngCsv', 'ngSanitize', 'firebase'])
     }
 
      $scope.specificDate = function(){
-         var selectedDate = moment($scope.date, 'MM/DD/YYYY');
+        var selectedDate = moment($scope.date);
         $scope.getArray = [];
 
         var rootRef = firebase.database().ref().child('LogInformation');
