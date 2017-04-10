@@ -1,5 +1,5 @@
 // Karma configuration
-// Generated on Sun Apr 02 2017 13:33:37 GMT-0400 (EDT)
+// Generated on Sun Apr 09 2017 14:44:48 GMT-0500 (US Eastern Standard Time)
 module.exports = function (config) {
     config.set({
         // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -7,25 +7,25 @@ module.exports = function (config) {
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
         frameworks: ['jasmine'], // list of files / patterns to load in the browser
         files: [
-          'app/bower_components/angular/angular.js'
-        , 'app/bower_components/angular-mocks/angular-mocks.js'
-        , 'app/bower_components/angular-route/angular-route.js'
-        , 'app/bower_components/ng-csv/src/ng-csv/ng-csv.js'
-        , 'app/bower_components/angular-sanitize/angular-sanitize.js'
-        , 'app/bower_components/angular-sanitize/angular-sanitize.min.js'
-        , 'app/bower_components/angular-bootstrap/ui-bootstrap.js'
-        , 'app/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js'
-        , 'app/bower_components/angular-bootstrap/ui-bootstrap.min.js'
-        , 'app/bower_components/angular-bootstrap/ui-bootstrap-tpls.js'
-        , 'app/bower_components/moment/moment.js'
-        , 'app/bower_components/moment/min/moment.min.js'
-        , 'app/bower_components/angular-moment/angular-moment.js'
-        , 'app/bower_components/angular-moment/angular-moment.min.js'
+          'bower_components/angular/angular.js'
+        , 'bower_components/angular-mocks/angular-mocks.js'
+        , 'bower_components/angular-route/angular-route.js'
+        , 'bower_components/ng-csv/src/ng-csv/ng-csv.js'
+        , 'bower_components/angular-sanitize/angular-sanitize.js'
+        , 'bower_components/angular-sanitize/angular-sanitize.min.js'
+        , 'bower_components/angular-bootstrap/ui-bootstrap.js'
+        , 'bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js'
+        , 'bower_components/angular-bootstrap/ui-bootstrap.min.js'
+        , 'bower_components/angular-bootstrap/ui-bootstrap-tpls.js'
+        , 'bower_components/moment/moment.js'
+        , 'bower_components/moment/min/moment.min.js'
+        , 'bower_components/angular-moment/angular-moment.js'
+        , 'bower_components/angular-moment/angular-moment.min.js'
         , 'node_modules/ng-flat-datepicker/src/js/datepicker.directive.js'
         , 'node_modules/ng-flat-datepicker/src/js/dateCalculator.factory.js'
-        , 'app/bower_components/angularfire/dist/angularfire.min.js'
-        , 'app/bower_components/angularfire/dist/angularfire.js'
-        , 'app/bower_components/firebase/firebase.js'
+        , 'bower_components/angularfire/dist/angularfire.min.js'
+        , 'bower_components/angularfire/dist/angularfire.js'
+        , 'bower_components/firebase/firebase.js'
         , 'app/home/*.js'
         , 'app/register/*.js'
         , 'app/welcome/*.js'
@@ -39,7 +39,7 @@ module.exports = function (config) {
         , 'app/contractorLogin/*.js'
         , 'app/safetyTraining/*.js'
         , 'app/*.js'
-        , 'tests/unit/*.js'
+        , 'app/welcome_test.js'
     ], // list of files to exclude
         exclude: [
     ], // preprocess matching files before serving them to the browser

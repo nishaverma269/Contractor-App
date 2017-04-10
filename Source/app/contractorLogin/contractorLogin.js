@@ -10,58 +10,11 @@ angular.module('webApp.contractorLogin', ['ngRoute', 'angularMoment', 'firebase'
     $scope.logoutPin = "";
     /* Getting the name and company information from the database for a particular pin number entered.*/
     $scope.contractorLogin = function () {
-        var ref = firebase.database().ref();
-        ref.child('Contractors').orderByChild("pin").equalTo($scope.loginPin).once("value", function (snapshot) {
-            var userData = snapshot.val();
-            if (userData) {
-                snapshot.forEach(function (childSnapshot) {
-                    var value = childSnapshot.val();
-                    $scope.name = value.name;
-                    $scope.company = value.company;
-                });
-                alert("Name: " + $scope.name + "\n" + "Company: " + $scope.company);
-            }
-            else {
-              /*  $scope.$apply(function () {
-                    $("#loginConfirmModal").modal('hide');
-                });*/
-                alert("Doesn't exist. Please see Admin");
-            }
-        });
-    };
-    /* Getting the name and company information from the database for a particular pin number entered.*/
-    $scope.contractorLogout = function () {
-        var ref = firebase.database().ref();
-        ref.child('Contractors').orderByChild("pin").equalTo($scope.logoutPin).once("value", function (snapshot) {
-            var userData = snapshot.val();
-            if (userData) {
-                snapshot.forEach(function (childSnapshot) {
-                    var value = childSnapshot.val();
-                    $scope.name = value.name;
-                    $scope.company = value.company;
-                    /*var modalInstance = $uibModal.open({
-                        component: 'myModal'
-                        , controller: "contractorLoginCtrl"
-                        , scope: $scope //passed current scope to the modal
-                    });*/
-                });
-                alert("Name: " + $scope.name + "\n" + "Company: " + $scope.company);
-            }
-            else {
-                alert("Wrong Pin. Please see Admin!");
-              /*  $scope.$apply(function () {
-                    $("#logoutConfirmModal").modal('hide');
-                });*/
-            }
-        });
-    };
-    /* Before logging in a model will be displayed to confirm if the information is correct for a particular pin number entered.*/
-    $scope.loginConfirmed = function () {
+        /* Login Logic */
         var logInformation;
         var logoutTime = $filter('date')(new Date(), 'shortTime');
         var currentDate = new Date();
         var momentDate = moment(currentDate, 'MM/DD/YYYY');
-        console.log(momentDate.day() + " day " + momentDate.year() + " year ");
         var loginTime = $filter('date')(new Date(), 'shortTime');
         var logOutTime = "00-00";
         var ref = firebase.database().ref().child('LogInformation');
@@ -80,14 +33,21 @@ angular.module('webApp.contractorLogin', ['ngRoute', 'angularMoment', 'firebase'
                         var updateRef = firebase.database().ref().child('Contractors/' + contractor.$id);
                         if (contractor.logStatus == 1) {
                             console.log("You're Already Logged in...");
+                            return alert("You're Already Logged in...");
                         }
                         else if (momentDate.isSame(moment(contractor.date).add(1, 'years'), 'day')) {
                             console.log("THE SAME");
+                            alert("Your safety training needs to be updated. Please see admin");
+                            return;
                         }
                         else if (momentDate.isAfter(moment(contractor.date).add(1, 'years'), 'day')) {
                             console.log("After");
+                            alert("Your safety training needs to be updated. Please see admin");
+                            return;
                         }
                         else {
+                            console.log("Logged in");
+                            alert("Please confirm your information:\n\n" + "Name: " + contractor.name + "\n" + "Company: " + contractor.company);
                             updateRef.update({
                                 logStatus: 1
                             })
@@ -101,16 +61,20 @@ angular.module('webApp.contractorLogin', ['ngRoute', 'angularMoment', 'firebase'
                                 , totalHours: 0
                                 , date: $filter('date')(new Date(), 'MM/dd/yyyy')
                             });
+                            return;
                         }
                     })
                 });
-                $scope.loginPin = "";
-                console.log($scope.contractors.name);
             }
+            else if ($scope.loginPin === "" || !userData) {
+                return alert("Wrong Pin. Please see admin.");
+            }
+            $scope.loginPin = "";
         });
     };
-    /* Before logging out a model will be displayed to confirm if the information is correct for a particular pin number entered.*/
-    $scope.logoutConfirmed = function () {
+    /* Getting the name and company information from the database for a particular pin number entered.*/
+    $scope.contractorLogout = function () {
+        /* Logout Logic */
         var ref = firebase.database().ref();
         ref.child("Contractors").orderByChild("pin").equalTo($scope.logoutPin).once("value", function (snapshot) {
             var userData = snapshot.val();
@@ -124,16 +88,12 @@ angular.module('webApp.contractorLogin', ['ngRoute', 'angularMoment', 'firebase'
                         var updateRef = firebase.database().ref().child('Contractors/' + contractor.$id);
                         if (contractor.logStatus == 0) {
                             console.log("You're Already Logged Out!!");
+                            alert("You're Already Logged Out...");
                         }
-                        else {
+                        else if (contractor.logStatus == 1) {
+                            alert("Please confirm your information:\n\n" + "Name: " + contractor.name + "\n" + "Company: " + contractor.company);
                             updateRef.update({
                                 logStatus: 0
-                            }).then(function (ref) {
-                                $scope.$apply(function () {
-                                    $("#logoutConfirmModal").modal('hide');
-                                });
-                            }, function (error) {
-                                console.log(error);
                             });
                             var rootRefLog = firebase.database().ref().child('LogInformation');
                             var filterRefLog = rootRefLog.orderByChild('pin').equalTo(contractor.pin);
@@ -160,11 +120,15 @@ angular.module('webApp.contractorLogin', ['ngRoute', 'angularMoment', 'firebase'
                                     }
                                 })
                             });
+                            return;
                         }
                     })
                 });
-                $scope.logoutPin = "";
             }
+            else {
+                return alert("Wrong Pin. Please see admin.");
+            }
+            $scope.logoutPin = "";
         });
     };
 }]);
