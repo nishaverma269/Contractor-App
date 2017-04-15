@@ -1,0 +1,3 @@
+https://www.w3schools.com/angular/
+
+We've used above link to learn AngularJS from scratch.
