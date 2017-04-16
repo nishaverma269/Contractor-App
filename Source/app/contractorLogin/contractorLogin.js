@@ -12,6 +12,7 @@ angular.module('webApp.contractorLogin', ['ngRoute', 'angularMoment', 'firebase'
     $scope.logoutPin = "";
     /* Getting the name and company information from the database for a particular pin number entered.*/
     $scope.contractorLogin = function () {
+<<<<<<< HEAD
         var ref = firebase.database().ref();
         ref.child('Contractors').orderByChild("pin").equalTo($scope.loginPin).once("value", function (snapshot) {
             var userData = snapshot.val();
@@ -63,11 +64,13 @@ angular.module('webApp.contractorLogin', ['ngRoute', 'angularMoment', 'firebase'
         Before logging in a model will be displayed to confirm if the information is correct for a particular pin number entered.
     */
     $scope.loginConfirmed = function () {
+=======
+        /* Login Logic */
+>>>>>>> origin/master
         var logInformation;
         var logoutTime = $filter('date')(new Date(), 'shortTime');
         var currentDate = new Date();
         var momentDate = moment(currentDate, 'MM/DD/YYYY');
-        console.log(momentDate.day() + " day " + momentDate.year() + " year ");
         var loginTime = $filter('date')(new Date(), 'shortTime');
         var logOutTime = "00-00";
         var ref = firebase.database().ref().child('LogInformation');
@@ -87,17 +90,24 @@ angular.module('webApp.contractorLogin', ['ngRoute', 'angularMoment', 'firebase'
                         // Don't let the contractor sign in if they are already signed in
                         if (contractor.logStatus == 1) {
                             console.log("You're Already Logged in...");
+                            return alert("You're Already Logged in...");
                         }
                         // Don't let the contractor sign in if it has been a year since their last safety training. 
                         else if (momentDate.isSame(moment(contractor.date).add(1, 'years'), 'day')) {
                             console.log("THE SAME");
+                            alert("Your safety training needs to be updated. Please see admin");
+                            return;
                         }
                         // Don't let the contractor sign in if it has been over a year since their last safety training. 
                         else if (momentDate.isAfter(moment(contractor.date).add(1, 'years'), 'day')) {
                             console.log("After");
+                            alert("Your safety training needs to be updated. Please see admin");
+                            return;
                         }
                         // If the contractor is up to date on their training, sign them in and update the loginformation.
                         else {
+                            console.log("Logged in");
+                            alert("Please confirm your information:\n\n" + "Name: " + contractor.name + "\n" + "Company: " + contractor.company);
                             updateRef.update({
                                 logStatus: 1
                             })
@@ -111,18 +121,27 @@ angular.module('webApp.contractorLogin', ['ngRoute', 'angularMoment', 'firebase'
                                 , totalHours: 0
                                 , date: $filter('date')(new Date(), 'MM/dd/yyyy')
                             });
+                            return;
                         }
                     })
                 });
-                $scope.loginPin = "";
-                console.log($scope.contractors.name);
             }
+            else if ($scope.loginPin === "" || !userData) {
+                return alert("Wrong Pin. Please see admin.");
+            }
+            $scope.loginPin = "";
         });
     };
+<<<<<<< HEAD
     /* 
         Before logging out a model will be displayed to confirm if the information is correct for a particular pin number entered.
     */
     $scope.logoutConfirmed = function () {
+=======
+    /* Getting the name and company information from the database for a particular pin number entered.*/
+    $scope.contractorLogout = function () {
+        /* Logout Logic */
+>>>>>>> origin/master
         var ref = firebase.database().ref();
         ref.child("Contractors").orderByChild("pin").equalTo($scope.logoutPin).once("value", function (snapshot) {
             var userData = snapshot.val();
@@ -136,16 +155,12 @@ angular.module('webApp.contractorLogin', ['ngRoute', 'angularMoment', 'firebase'
                         var updateRef = firebase.database().ref().child('Contractors/' + contractor.$id);
                         if (contractor.logStatus == 0) {
                             console.log("You're Already Logged Out!!");
+                            alert("You're Already Logged Out...");
                         }
-                        else {
+                        else if (contractor.logStatus == 1) {
+                            alert("Please confirm your information:\n\n" + "Name: " + contractor.name + "\n" + "Company: " + contractor.company);
                             updateRef.update({
                                 logStatus: 0
-                            }).then(function (ref) {
-                                $scope.$apply(function () {
-                                    $("#logoutConfirmModal").modal('hide');
-                                });
-                            }, function (error) {
-                                console.log(error);
                             });
                             var rootRefLog = firebase.database().ref().child('LogInformation');
                             var filterRefLog = rootRefLog.orderByChild('pin').equalTo(contractor.pin);
@@ -172,11 +187,15 @@ angular.module('webApp.contractorLogin', ['ngRoute', 'angularMoment', 'firebase'
                                     }
                                 })
                             });
+                            return;
                         }
                     })
                 });
-                $scope.logoutPin = "";
             }
+            else {
+                return alert("Wrong Pin. Please see admin.");
+            }
+            $scope.logoutPin = "";
         });
     };
 }]);

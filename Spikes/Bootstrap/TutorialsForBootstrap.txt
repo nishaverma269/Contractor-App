@@ -1,10 +1,5 @@
-To learn Bootstrap, we will be following tutorials from:
+For Bootstrap, we've followed the following links:
 
 https://www.taniarascia.com/what-is-bootstrap-and-how-do-i-use-it/
 
-and 
-
 http://www.w3schools.com/bootstrap/bootstrap_get_started.asp
-
-As we learn from these tutorials, we will add more spikes about
-Bootstrap if they pertain to our final project.

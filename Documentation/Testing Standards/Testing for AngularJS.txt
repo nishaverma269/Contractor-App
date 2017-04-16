@@ -1,4 +1,11 @@
-For testing of the AngularJS code, we will be utilizing Karma and Jasimine where Karma is a mock
-server and Jasmine allows for creating asserts for testing. We will be follow the testing tutorial 
-and standards set by https://docs.angularjs.org/guide/unit-testing while also following the coding
-conventions set by https://github.com/mgechev/angularjs-style-guide/blob/master/README.md
+Testing is done using KARMA and JASMINE.
+
+Karma is a JavaScript command line tool that can be used to spawn a web server which loads your application's source code and executes your tests.
+
+Jasmine is a behavior driven development framework for JavaScript that has become the most popular choice for testing AngularJS applications.
+
+We will be follow the testing tutorial and standards set by
+https://docs.angularjs.org/guide/unit-testing
+
+Also. following the coding conventions set by
+https://github.com/mgechev/angularjs-style-guide/blob/master/README.md
