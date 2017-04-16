@@ -4,7 +4,7 @@ angular.module('webApp.contractorAdmin', ['ngRoute', 'firebase']).config(['$rout
         templateUrl: 'contractorAdmin/contractorAdmin.html',
         controller: 'AdminCtrl'
     });
-}]).controller('AdminCtrl', ['$scope', '$firebaseAuth', '$location', 'CommonProp', function ($scope, $firebaseAuth, $location, CommonProp) {
+}]).controller('AdminCtrl', ['$scope', '$firebaseAuth', '$location', 'CommonProp','$timeout', function ($scope, $firebaseAuth, $location, CommonProp,$timeout) {
     /*
         AdminCtrl involves the logic with logging in an admin. 
     */
@@ -12,6 +12,11 @@ angular.module('webApp.contractorAdmin', ['ngRoute', 'firebase']).config(['$rout
     /*
         Signin method to sign in Admin using information from the model. 
     */
+    /*
+        Used to show if the admin had the wrong username and password
+    */
+    $scope.incorrectLoginMessage = "Incorrect credentials. Please try again."
+    $scope.loginAlertMessage = false;
     $scope.signIn = function () {
             var username = $scope.user.email;
             var password = $scope.user.password;
@@ -23,6 +28,8 @@ angular.module('webApp.contractorAdmin', ['ngRoute', 'firebase']).config(['$rout
             }).catch(function (error) {
                 $scope.errMsg = true;
                 $scope.errorMessage = error.message;
+                $scope.loginAlertMessage = true;
+                $timeout(function () { $scope.loginAlertMessage = false; }, 3000); 
             });
         }
         /* 

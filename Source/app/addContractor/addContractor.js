@@ -21,7 +21,6 @@ angular.module('webApp.addContractor', ['ngRoute', 'firebase']).config(['$routeP
     */
     $scope.datepickerConfig = {
         allowFuture: false
-
     };
     var ref = firebase.database().ref().child('Contractors');
     var companyRef = firebase.database().ref().child('Company');
@@ -40,7 +39,7 @@ angular.module('webApp.addContractor', ['ngRoute', 'firebase']).config(['$routeP
         ref.orderByChild("pin").equalTo(pin).once("value", function (snapshot) {
             var userData = snapshot.val();
             if (userData) {
-                alert("exists!");
+                alert("A contractor is already in the system with the same PIN. Please choose another.");
             } else {
                 $scope.contractor.$add({
                     name: name,
@@ -64,6 +63,9 @@ angular.module('webApp.addContractor', ['ngRoute', 'firebase']).config(['$routeP
         $scope.contractor.company = ''; // reset company
         $scope.contractor.pin = ''; // reset pin
     };
+    /*
+        Used to logout a user from the site.
+    */
     $scope.logout = function () {
         CommonProp.logoutUser();
     }

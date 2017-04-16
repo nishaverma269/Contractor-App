@@ -4,7 +4,7 @@
 <head>
     <title>WebApp Home Page</title>
 </head>
-
+    <!-- To show the navigation bar at the top -->
 <body ng-controller="WelcomeCtrl">
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
@@ -21,11 +21,11 @@
     </nav>
     <!--This div is used to display the image and date information on front page. -->
     <div> <img src="welcome/contractor-bg.jpg" alt="Contractor View" style="position:fixed;top:0px;left:0px;width:100%;height:100%;z-index:-1;">
-        <div class="caption"><span class="border"><strong>WELCOME TO THE SITE!</strong></span>
+        <div class="caption"><span class="border"><strong>WELCOME TO THE SITE ACCESS CHECKPOINT APPLICATION!</strong></span>
             <br>
             <br><span class="border"><strong>{{date | date:'fullDate'}}</strong></span>
             <br>
-            <br> <span class="border" align="center"><strong>{{date | date:'shortTime'}}</strong></span> </div>
+           
     </div>
 </body>
 

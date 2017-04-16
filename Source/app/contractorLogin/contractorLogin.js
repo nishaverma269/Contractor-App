@@ -12,7 +12,6 @@ angular.module('webApp.contractorLogin', ['ngRoute', 'angularMoment', 'firebase'
     $scope.logoutPin = "";
     /* Getting the name and company information from the database for a particular pin number entered.*/
     $scope.contractorLogin = function () {
-<<<<<<< HEAD
         var ref = firebase.database().ref();
         ref.child('Contractors').orderByChild("pin").equalTo($scope.loginPin).once("value", function (snapshot) {
             var userData = snapshot.val();
@@ -64,9 +63,7 @@ angular.module('webApp.contractorLogin', ['ngRoute', 'angularMoment', 'firebase'
         Before logging in a model will be displayed to confirm if the information is correct for a particular pin number entered.
     */
     $scope.loginConfirmed = function () {
-=======
-        /* Login Logic */
->>>>>>> origin/master
+
         var logInformation;
         var logoutTime = $filter('date')(new Date(), 'shortTime');
         var currentDate = new Date();
@@ -132,16 +129,15 @@ angular.module('webApp.contractorLogin', ['ngRoute', 'angularMoment', 'firebase'
             $scope.loginPin = "";
         });
     };
-<<<<<<< HEAD
+
     /* 
         Before logging out a model will be displayed to confirm if the information is correct for a particular pin number entered.
     */
     $scope.logoutConfirmed = function () {
-=======
+
     /* Getting the name and company information from the database for a particular pin number entered.*/
-    $scope.contractorLogout = function () {
-        /* Logout Logic */
->>>>>>> origin/master
+
+
         var ref = firebase.database().ref();
         ref.child("Contractors").orderByChild("pin").equalTo($scope.logoutPin).once("value", function (snapshot) {
             var userData = snapshot.val();

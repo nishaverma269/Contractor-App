@@ -66,34 +66,6 @@ angular.module('webApp.showContractors', ['ngRoute', 'firebase']).config(['$rout
         $scope.contractors.$remove(deleteContractor);
         $("#deleteModal").modal('hide');
     };
-    /* 
-        Method to search a contractor by company 
-        Not used, but can be used in future
-    */
-    $scope.searchCompany = function () {
-        var rootRef = firebase.database().ref().child('Contractors');
-        var filterRef;
-        if ($scope.contractorData.companyName == undefined || $scope.contractorData.companyName === "") {
-            $scope.contractors = $firebaseArray(rootRef);
-        } else {
-            filterRef = rootRef.orderByChild('company').equalTo($scope.contractorData.companyName);
-            $scope.contractors = $firebaseArray(filterRef);
-        }
-    };
-    /* 
-        Method to search a contractor by name
-        Not used, but can be used in future
-    */
-    $scope.searchName = function () {
-        var rootRef = firebase.database().ref().child('Contractors');
-        var filterRef;
-        if ($scope.contractorData.contractorName == undefined || $scope.contractorData.contractorName === "") {
-            $scope.contractors = $firebaseArray(rootRef);
-        } else {
-            filterRef = rootRef.orderByChild('name').equalTo($scope.contractorData.contractorName);
-            $scope.contractors = $firebaseArray(filterRef);
-        }
-    };
     /* Logout method for Admin */
     $scope.logout = function () {
         CommonProp.logoutUser();
