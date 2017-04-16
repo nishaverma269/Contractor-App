@@ -1,10 +1,20 @@
 'use strict';
 angular.module('webApp.adminSettings', ['ngRoute', 'ngCsv', 'ngSanitize', 'firebase']).config(['$routeProvider', function ($routeProvider) {
     $routeProvider.when('/adminSettings', {
-        templateUrl: 'adminSettings/adminSettings.html'
-        , controller: 'adminSettings'
+        templateUrl: 'adminSettings/adminSettings.html',
+        controller: 'adminSettingsCtrl'
     });
-}]).controller('adminSettings', ['$scope', '$firebaseArray', '$location', 'CommonProp', function ($scope, $firebaseArray, $location, CommonProp) {
+}]).controller('adminSettingsCtrl', ['$scope', '$firebaseArray', '$location', 'CommonProp', function ($scope, $firebaseArray, $location, CommonProp) {
+    /*
+        adminSettingsCtrl allows an admin to update their own profile or delete their own profile if needed. 
+    */
+    /*
+        If user is not authenticated, bring them back to the welcome page.
+    */
+    $scope.username = CommonProp.getUser();
+    if (!$scope.username) {
+        $location.path('/welcome');
+    }
     $scope.user = firebase.auth().currentUser;
     /* Update method for updating admin's information in firebase. */
     $scope.updateAdmin = function () {
@@ -26,7 +36,7 @@ angular.module('webApp.adminSettings', ['ngRoute', 'ngCsv', 'ngSanitize', 'fireb
                 $("#deleteModal").modal('hide');
             });
         }, function (error) {
-             console.log(error);
+            console.log(error);
         });
         $location.path('/contractorAdmin');
     };

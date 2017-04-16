@@ -22,10 +22,14 @@
     <!--This form will get the required information from the user to add a new contractor.-->
     <div> <a href="#/showContractors"><span class="glyphicon glyphicon-arrow-left" > Go Back</span></a> </div>
     <div class="container">
-        <form role="form" id="contractorForm" name="contractorForm" ng-submit="createContractor()" novalidate="">
+        <form role="form" id="contractorForm" name="contractorForm" novalidate="">
             <legend>Create Contractor</legend>
             <div class="row">
                 <div class="col-md-5">
+                    <label for="Safety Training">Safety Training Date</label>
+                    <p>Pick a date
+                        <button button type="text" class="center-block form-control" name="date" ng-flat-datepicker datepicker-config="datepickerConfig" ng-model="date">{{date | date:'MM/dd/yyyy'}}</button>
+                    </p>
                     <div class="form-group" ng-class="{'has-error': contractorForm.name.$invalid && contractorForm.name.$touched}">
                         <label for="name">Name</label>
                         <input type="text" name="name" class="form-control" placeholder="Name" ng-model="contractor.name" ng-minlength="1" required=""> <small class="help-block" ng-show="contractorForm.name.$error.minlength && contractorForm.name.$touched">Please enter a valid name.</small> </div>
@@ -33,19 +37,15 @@
                         <label for="company">Company</label>
                         <select class="form-control" ng-model="contractor.company">
                             <option disabled selected>Choose your option</option>
-                            <option>Kellog</option>
-                            <option>Meijer</option>
-                            <option>CSM</option>
+                            <option ng-repeat="company in companies">{{company.company}}</option>
                         </select>
                     </div>
                     <div class="form-group" ng-class="{'has-error': contractorForm.pin.$invalid && contractorForm.pin.$touched}">
                         <label for="pin">PIN</label>
                         <input type="text" name="pin" class="form-control" placeholder="Pin" ng-model="contractor.pin" ng-minlength="1" required=""> <small class="help-block" ng-show="contractorForm.pin.$error.minlength && contractorForm.pin.$touched">Please enter a valid PIN.</small> </div>
+
                     <div class="form-group">
-                        <label for="Safety Training">Safety Training Date</label>
-                        <input type="text" name="date" ng-flat-datepicker datepicker-config="datepickerConfig" ng-model="date"> </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary" ng-disabled="contractorForm.$invalid">Add Contractor</button>
+                        <button type="submit" class="btn btn-primary" ng-disabled="contractorForm.$invalid" ng-click="createContractor()">Add Contractor</button>
                     </div>
                 </div>
             </div>

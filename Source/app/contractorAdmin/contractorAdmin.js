@@ -1,15 +1,17 @@
 'use strict';
 angular.module('webApp.contractorAdmin', ['ngRoute', 'firebase']).config(['$routeProvider', function ($routeProvider) {
     $routeProvider.when('/contractorAdmin', {
-        templateUrl: 'contractorAdmin/contractorAdmin.html'
-        , controller: 'AdminCtrl'
+        templateUrl: 'contractorAdmin/contractorAdmin.html',
+        controller: 'AdminCtrl'
     });
 }]).controller('AdminCtrl', ['$scope', '$firebaseAuth', '$location', 'CommonProp', function ($scope, $firebaseAuth, $location, CommonProp) {
-    $scope.username = CommonProp.getUser();
-    if ($scope.username) {
-        $location.path('/home');
-    }
-    /*Signin method to sign in Admin*/
+    /*
+        AdminCtrl involves the logic with logging in an admin. 
+    */
+
+    /*
+        Signin method to sign in Admin using information from the model. 
+    */
     $scope.signIn = function () {
             var username = $scope.user.email;
             var password = $scope.user.password;
@@ -23,12 +25,16 @@ angular.module('webApp.contractorAdmin', ['ngRoute', 'firebase']).config(['$rout
                 $scope.errorMessage = error.message;
             });
         }
-        /* This is used to logout Admin from the system*/
+        /* 
+            This is used to logout Admin from the system
+        */
     $scope.logout = function () {
         CommonProp.logoutUser();
     }
 }]).service('CommonProp', ['$location', '$firebaseAuth', function ($location, $firebaseAuth) {
-    /*Builtin service in angular js for the authentication in firebase.*/
+    /*
+    CommonProp holds information on the current logged in user and allows for getting the current user's information, setting the current user when appropriate and logging out the user. 
+    */
     var user = "";
     var auth = $firebaseAuth();
     return {
@@ -37,12 +43,12 @@ angular.module('webApp.contractorAdmin', ['ngRoute', 'firebase']).config(['$rout
                 user = localStorage.getItem("userEmail");
             }
             return user;
-        }
-        , setUser: function (value) {
+        },
+        setUser: function (value) {
             localStorage.setItem("userEmail", value);
             user = value;
-        }
-        , logoutUser: function () {
+        },
+        logoutUser: function () {
             auth.$signOut();
             console.log("Logged Out Succesfully");
             user = "";

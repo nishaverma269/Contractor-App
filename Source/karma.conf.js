@@ -21,6 +21,7 @@ module.exports = function (config) {
         , 'app/bower_components/moment/min/moment.min.js'
         , 'app/bower_components/angular-moment/angular-moment.js'
         , 'app/bower_components/angular-moment/angular-moment.min.js'
+        , 'app/bower_components/mockfirebase/browser/mockfirebase.js'
         , 'node_modules/ng-flat-datepicker/src/js/datepicker.directive.js'
         , 'node_modules/ng-flat-datepicker/src/js/dateCalculator.factory.js'
         , 'app/bower_components/angularfire/dist/angularfire.min.js'

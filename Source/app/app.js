@@ -5,7 +5,6 @@ angular.module('webApp', [
   , 'webApp.home'
   , 'webApp.register'
   , 'webApp.welcome'
-  , 'webApp.addPost'
   , 'webApp.contractorAdmin'
   , 'webApp.adminSettings'
   , 'webApp.reports'

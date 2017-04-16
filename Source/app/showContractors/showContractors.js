@@ -4,8 +4,22 @@ angular.module('webApp.showContractors', ['ngRoute', 'firebase']).config(['$rout
         templateUrl: 'showContractors/showContractors.html',
         controller: 'showContractorsCtrl'
     });
-    
+
 }]).controller('showContractorsCtrl', ['$scope', 'CommonProp', '$firebaseArray', '$firebaseObject', '$location', function ($scope, CommonProp, $firebaseArray, $firebaseObject, $location) {
+    $scope.username = CommonProp.getUser();
+    if (!$scope.username) {
+        $location.path('/welcome');
+    }
+    /*
+        showContractorsCtrl maintains the model involved with all of the contractors, which is adding, deleting and updating contractors. At first, it shows all contractors involved and can change by typing in the search bar in showContractors.html, which filters out contractors based on what it is typed. 
+        For Example: Typing in cameron will give all contractors with that name and typing in 213 will give all contractors with that pin.
+    */
+    /*
+        Done to create the firebaseArray for Company that can show up in the dropdown menu for Companies
+    */
+    var companyRef = firebase.database().ref().child('Company');
+    $scope.companies = $firebaseArray(companyRef);
+    
     $scope.date = new Date();
     $scope.datepickerConfig = {
         allowFuture: false
@@ -52,7 +66,10 @@ angular.module('webApp.showContractors', ['ngRoute', 'firebase']).config(['$rout
         $scope.contractors.$remove(deleteContractor);
         $("#deleteModal").modal('hide');
     };
-    /* Method to search a contractor by company */
+    /* 
+        Method to search a contractor by company 
+        Not used, but can be used in future
+    */
     $scope.searchCompany = function () {
         var rootRef = firebase.database().ref().child('Contractors');
         var filterRef;
@@ -63,7 +80,10 @@ angular.module('webApp.showContractors', ['ngRoute', 'firebase']).config(['$rout
             $scope.contractors = $firebaseArray(filterRef);
         }
     };
-    /* Method to search a contractor by name */
+    /* 
+        Method to search a contractor by name
+        Not used, but can be used in future
+    */
     $scope.searchName = function () {
         var rootRef = firebase.database().ref().child('Contractors');
         var filterRef;
