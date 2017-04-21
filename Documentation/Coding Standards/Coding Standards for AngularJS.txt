@@ -1,2 +1,0 @@
-The coding standards used for AngularJs
-https://github.com/mgechev/angularjs-style-guide/blob/master/README.md

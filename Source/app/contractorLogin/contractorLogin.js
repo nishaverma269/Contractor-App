@@ -12,22 +12,34 @@ angular.module('webApp.contractorLogin', ['ngRoute', 'angularMoment', 'firebase'
     $scope.logoutPin = "";
     /* Getting the name and company information from the database for a particular pin number entered.*/
     $scope.contractorLogin = function () {
-        var ref = firebase.database().ref();
+        var ref = firebase.database().ref().child('Contractors').orderByChild("pin").equalTo($scope.loginPin);
+        var fbArray = $firebaseArray(ref);
+        console.log(fbArray[0].name);
         ref.child('Contractors').orderByChild("pin").equalTo($scope.loginPin).once("value", function (snapshot) {
             var userData = snapshot.val();
+            var values = JSON.stringify(userData);
+            console.log(values[0]);
             if (userData) {
                 snapshot.forEach(function (childSnapshot) {
                     var value = childSnapshot.val();
                     $scope.name = value.name;
                     $scope.company = value.company;
                 });
-                alert("Name: " + $scope.name + "\n" + "Company: " + $scope.company);
+                 /* $scope.$apply(function () {
+                    $("#loginConfirmModal");
+                });*/
+                 setTimeout(function(){
+                    alert("Name: " + $scope.name);
+                }, 1000);
             }
             else {
-              /*  $scope.$apply(function () {
+             /*   $scope.$apply(function () {
                     $("#loginConfirmModal").modal('hide');
-                });*/
-                alert("Doesn't exist. Please see Admin");
+                });
+                */
+                setTimeout(function(){
+                    alert("Doesn't exist. Please see Admin");
+                }, 1000);
             }
         });
     };

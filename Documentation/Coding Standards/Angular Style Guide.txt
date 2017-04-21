@@ -1,7 +1,5 @@
 Much of the coding standards that we used for our coding of Javascript inside of our AngularJS
-is from this web page, such as naming standards for functions, services, and controllers 
-and the project structure of our application.
-
+is from this web page, such as naming standards, project structure, a
 https://github.com/johnpapa/angular-styleguide/blob/master/a1/README.md
 
 Some things we did differently compared to this style:

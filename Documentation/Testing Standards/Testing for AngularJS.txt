@@ -1,11 +1,20 @@
 Testing is done using KARMA and JASMINE.
 
-Karma is a JavaScript command line tool that can be used to spawn a web server which loads your application's source code and executes your tests.
+Karma is a JavaScript command line tool that can be used to spawn a web server 
+which loads your application's source code and executes your tests.
 
-Jasmine is a behavior driven development framework for JavaScript that has become the most popular choice for testing AngularJS applications.
+Jasmine is a behavior driven development framework for JavaScript that has become the 
+most popular choice for testing AngularJS applications.
 
 We will be follow the testing tutorial and standards set by
 https://docs.angularjs.org/guide/unit-testing
 
 Also. following the coding conventions set by
 https://github.com/mgechev/angularjs-style-guide/blob/master/README.md
+
+Testing files for unit testing are located in the same directories as the code it is testing 
+and has the same ending as the name of the .js file that holds our controller with Test added
+at the end. 
+
+Testing files for End-to-End testinga are located within the e2e-tests directory and the tests
+are within scenarios.  

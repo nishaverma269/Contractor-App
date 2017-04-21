@@ -13,4 +13,29 @@ git push origin master 		... Push to repository and update.
 
 git pull 			... pull new changes...
 
-If not using Linux, will be using the desktop app provided by GitHub.
+If not using Linux, will be using the desktop app provided by GitHub, which is called GitHub 
+Desktop.
+
+https://help.github.com/desktop/guides/getting-started/ - Helps with installing and making
+sure GitHub Desktop is setup correctly. 
+
+https://help.github.com/desktop/guides/contributing/ - Helps with how to contribute to a 
+GitHub project using GitHub Desktop. 
+
+The general idea of how to use GitHub Desktop:
+1. Find the project you are working on their official website. 
+
+2. Open it in GitHub Desktop by going to Clone and Download and opening it on the
+desktop. This will add the project to your GitHub Desktop list of projects.
+ 
+3. From this, you can open up the location of your project structure by right clicking
+on the project on GitHub Desktop and selecting Open in Explorer
+
+4. Any changes to this directory will reflect in the application and changes can be added 
+by first commiting the changes with a description of what you are adding and clicking the Sync
+button in the top right corner that will sync the new changes along with any new changes by other 
+users on the website. You push new changes to branches instead by clicking on the button next 
+to the master dropdown menu and adding new ones or finding an existing one. 
+
+
+https://guides.github.com/ is a good reference for how to use GitHub as well.

@@ -1,2 +1,19 @@
-In each module, the brief description will be given of that module i.e Input, Output, Functionality, other modules used etc.
-Also, commenting will be done for any specific function or special functionality such as authentication code.
+Comments are located at the top of each .js file that 
+explains what the controller does and why we are using it. 
+
+If there is a service in any of the controllers, we also explain what that is used for with a 
+comment at the top of the service, such as CommonProp being used for keeping track of an 
+authenticated user between web pages. 
+
+Functions in each .js file also include what they are used for, how they are called, which is 
+generally through a directive like ng-click, and what the result of the function should be 
+and if it should affect the view. 
+
+Each HTML file includes comments in places that may need explaining, such as a button 
+that calls ng-click for a function, or where important functionality of the HTML is run. 
+
+Testing files are generally self described since they are located in the same folder as the 
+functions they are testing. The 'describes' for each test file explain what the unit tests 
+or end-to-end tests are being done and the 'it' describes a specific case being tested. 
+
+

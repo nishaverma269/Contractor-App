@@ -64,4 +64,4 @@ describe("Unit Tests: showContractors", function () {
         expect(scope.contractors[0].name).toEqual(contractor.name);
     });
 
-});//jkljlkkj;asdfasdafdsf
+});
