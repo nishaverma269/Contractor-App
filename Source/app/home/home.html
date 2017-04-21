@@ -59,7 +59,7 @@
                         <tr ng-repeat="contractor in getArray">
                             <td>{{contractor.name}}</td>
                             <td>{{contractor.pin}}</td>
-                            <td>{{contractor.date}}</td>
+                            <td>{{contractor.date | date:'MM/dd/yyyy'}}</td>
                         </tr>
                     </tbody>
                 </table>

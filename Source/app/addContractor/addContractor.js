@@ -39,7 +39,8 @@ angular.module('webApp.addContractor', ['ngRoute', 'firebase']).config(['$routeP
         ref.orderByChild("pin").equalTo(pin).once("value", function (snapshot) {
             var userData = snapshot.val();
             if (userData) {
-                alert("A contractor is already in the system with the same PIN. Please choose another.");
+                 $("#dupContractorModal").modal('show');
+                //alert("A contractor is already in the system with the same PIN. Please choose another.");
             } else {
                 $scope.contractor.$add({
                     name: name,

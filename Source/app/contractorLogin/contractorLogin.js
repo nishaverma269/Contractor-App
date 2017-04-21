@@ -1,85 +1,95 @@
 'use strict';
 angular.module('webApp.contractorLogin', ['ngRoute', 'angularMoment', 'firebase', 'ui.bootstrap']).config(['$routeProvider', function ($routeProvider) {
     $routeProvider.when('/contractorLogin', {
-        templateUrl: 'contractorLogin/contractorLogin.html'
-        , controller: 'contractorLoginCtrl'
+        templateUrl: 'contractorLogin/contractorLogin.html',
+        controller: 'contractorLoginCtrl'
     });
     }]).controller('contractorLoginCtrl', ['$scope', '$filter', '$uibModal', 'CommonProp', 'moment', '$firebaseArray', '$firebaseObject', '$location', function ($scope, $filter, $uibModal, CommonProp, moment, $firebaseArray, $firebaseObject, $location) {
-    /* 
-        contractorLoginCtrl takes either a loginPin or a loginPin from the user and uses those to login a contractor while also displaying modals to ensure that contractors are signed in correctly. 
+    /*
+        contractorLoginCtrl helps with the logic of logging in a contractor. A different modal will be displayed based on 
+        the status of the contractor. If the contractor is not updated on their safety training in the last 12 months, they will
+        not be allowed to log in. 
     */
     $scope.loginPin = "";
     $scope.logoutPin = "";
-    /* Getting the name and company information from the database for a particular pin number entered.*/
+    $scope.show = 0;
+    /*
+        contractorLogin checks to see if the contractor is in the system based on their pin.
+        If they are not, a modal will pop up to tell them. 
+        If they are, a modal will pop up to finish the login. 
+    */
     $scope.contractorLogin = function () {
-        var ref = firebase.database().ref().child('Contractors').orderByChild("pin").equalTo($scope.loginPin);
-        var fbArray = $firebaseArray(ref);
-        console.log(fbArray[0].name);
+        var ref = firebase.database().ref();
         ref.child('Contractors').orderByChild("pin").equalTo($scope.loginPin).once("value", function (snapshot) {
             var userData = snapshot.val();
-            var values = JSON.stringify(userData);
-            console.log(values[0]);
+            // If the pin is correct...
             if (userData) {
                 snapshot.forEach(function (childSnapshot) {
                     var value = childSnapshot.val();
                     $scope.name = value.name;
                     $scope.company = value.company;
+                   
                 });
-                 /* $scope.$apply(function () {
-                    $("#loginConfirmModal");
-                });*/
-                 setTimeout(function(){
-                    alert("Name: " + $scope.name);
-                }, 1000);
-            }
-            else {
-             /*   $scope.$apply(function () {
-                    $("#loginConfirmModal").modal('hide');
-                });
-                */
-                setTimeout(function(){
-                    alert("Doesn't exist. Please see Admin");
-                }, 1000);
+                // Used to open up modal.
+                 var modalInstance = $uibModal.open({
+                        component: 'myModal',
+                        controller: "contractorLoginCtrl",
+                        scope: $scope //passed current scope to the modal
+                    });
+                $("#loginConfirmModal").modal('show');
+            } else {
+                //Shown if the pin does not show in the system. 
+                $("#wrongPINModal").modal('show');
             }
         });
     };
     /* 
-        Getting the name and company information from the database for a particular pin number entered.
+        contractorLogout first checks to see if the contractor is in the system based on their pin. 
+        If they are not, a modal will pop up to tell them.
+        If they are, a modal will pop up to finish the logout. 
     */
     $scope.contractorLogout = function () {
         var ref = firebase.database().ref();
         ref.child('Contractors').orderByChild("pin").equalTo($scope.logoutPin).once("value", function (snapshot) {
             var userData = snapshot.val();
+            // If the pin is correct...
             if (userData) {
                 snapshot.forEach(function (childSnapshot) {
                     var value = childSnapshot.val();
                     $scope.name = value.name;
                     $scope.company = value.company;
-                    /*var modalInstance = $uibModal.open({
-                        component: 'myModal'
-                        , controller: "contractorLoginCtrl"
-                        , scope: $scope //passed current scope to the modal
-                    });*/
+                    var modalInstance = $uibModal.open({
+                        component: 'myModal',
+                        controller: "contractorLoginCtrl",
+                        scope: $scope //passed current scope to the modal
+                    });
                 });
-                alert("Name: " + $scope.name + "\n" + "Company: " + $scope.company);
-            }
-            else {
-                alert("Wrong Pin. Please see Admin!");
-              /*  $scope.$apply(function () {
-                    $("#logoutConfirmModal").modal('hide');
-                });*/
+                // Used to open modal.
+                 var modalInstance = $uibModal.open({
+                        component: 'myModal',
+                        controller: "contractorLoginCtrl",
+                        scope: $scope //passed current scope to the modal
+                    });
+                $("#logoutConfirmModal").modal('show');
+            } else {
+                //Shown if the pin does not exist in the system. 
+                $("#wrongPINModal").modal('show');
             }
         });
     };
     /* 
-        Before logging in a model will be displayed to confirm if the information is correct for a particular pin number entered.
+        loginConfirmed will finish the login process. 
+        If they user is already logged in, it will not allow them to complete the login process.
+        If the user needs to update their safety training, it will not allow them to complete the login process.
+        If the user is not logged in and safety training is good, the contractor is logged in and a entry to the 
+        LogInformation node will be made in Firebase
     */
     $scope.loginConfirmed = function () {
-
         var logInformation;
         var logoutTime = $filter('date')(new Date(), 'shortTime');
         var currentDate = new Date();
         var momentDate = moment(currentDate, 'MM/DD/YYYY');
+        console.log(momentDate.day() + " day " + momentDate.year() + " year ");
         var loginTime = $filter('date')(new Date(), 'shortTime');
         var logOutTime = "00-00";
         var ref = firebase.database().ref().child('LogInformation');
@@ -87,69 +97,59 @@ angular.module('webApp.contractorLogin', ['ngRoute', 'angularMoment', 'firebase'
         var ref = firebase.database().ref();
         ref.child("Contractors").orderByChild("pin").equalTo($scope.loginPin).once("value", function (snapshot) {
             var userData = snapshot.val();
+            // If the user is in the system... 
             if (userData) {
                 var rootRef = firebase.database().ref().child('Contractors');
                 var filterRef;
                 filterRef = rootRef.orderByChild('pin').equalTo($scope.loginPin);
                 $scope.contractors = $firebaseArray(filterRef);
                 $scope.contractors.$loaded().then(function () {
-                    angular.forEach($scope.contractors, function (contractor) {
-                        console.log(moment(contractor.date).add(1, 'years').year())
-                        var updateRef = firebase.database().ref().child('Contractors/' + contractor.$id);
-                        // Don't let the contractor sign in if they are already signed in
-                        if (contractor.logStatus == 1) {
-                            console.log("You're Already Logged in...");
-                            return alert("You're Already Logged in...");
-                        }
-                        // Don't let the contractor sign in if it has been a year since their last safety training. 
-                        else if (momentDate.isSame(moment(contractor.date).add(1, 'years'), 'day')) {
-                            console.log("THE SAME");
-                            alert("Your safety training needs to be updated. Please see admin");
-                            return;
-                        }
-                        // Don't let the contractor sign in if it has been over a year since their last safety training. 
-                        else if (momentDate.isAfter(moment(contractor.date).add(1, 'years'), 'day')) {
-                            console.log("After");
-                            alert("Your safety training needs to be updated. Please see admin");
-                            return;
-                        }
-                        // If the contractor is up to date on their training, sign them in and update the loginformation.
-                        else {
-                            console.log("Logged in");
-                            alert("Please confirm your information:\n\n" + "Name: " + contractor.name + "\n" + "Company: " + contractor.company);
-                            updateRef.update({
-                                logStatus: 1
-                            })
-                            logInformation.$add({
-                                name: contractor.name
-                                , company: contractor.company
-                                , pin: contractor.pin
-                                , loginTime: loginTime
-                                , logOutTime: logOutTime
-                                , currentLoginStatus: 1
-                                , totalHours: 0
-                                , date: $filter('date')(new Date(), 'MM/dd/yyyy')
+                    var updateRef = firebase.database().ref().child('Contractors/' + $scope.contractors[0].$id);
+                    if ($scope.contractors[0].logStatus == 1) {
+                        $("#loginConfirmModal").modal('hide');
+                        $("#alreadyLoggedInModal").modal('show');
+                    } else if (momentDate.isSame(moment($scope.contractors[0].date).add(1, 'years'), 'day')) {
+                        $("#loginConfirmModal").modal('hide');
+                        $("#safetyTrainingModal").modal('show');
+                    } else if (momentDate.isAfter(moment($scope.contractors[0].date).add(1, 'years'), 'day')) {
+                        $("#loginConfirmModal").modal('hide');
+                        $("#safetyTrainingModal").modal('show');
+                    } else {
+                        updateRef.update({
+                            logStatus: 1
+                        }).then(function (ref) {
+                            $scope.$apply(function () {
+                                $("#loginConfirmModal").modal('hide');
                             });
-                            return;
-                        }
-                    })
+                        }, function (error) {
+                            console.log(error);
+                        });
+                        $("#loggedInModal").modal('show');
+                        logInformation.$add({
+                            name: $scope.contractors[0].name,
+                            company: $scope.contractors[0].company,
+                            pin: $scope.contractors[0].pin,
+                            loginTime: loginTime,
+                            logOutTime: logOutTime,
+                            currentLoginStatus: 1,
+                            totalHours: 0,
+                            date: $filter('date')(new Date(), 'MM/dd/yyyy')
+                        });
+                    }
+
                 });
+                $scope.loginPin = "";
+                //console.log($scope.contractors.name);
             }
-            else if ($scope.loginPin === "" || !userData) {
-                return alert("Wrong Pin. Please see admin.");
-            }
-            $scope.loginPin = "";
         });
     };
-
-    /* 
-        Before logging out a model will be displayed to confirm if the information is correct for a particular pin number entered.
+    /*
+      logoutConfirmed will finish the logout process. 
+        If they user is already logged out, it will not allow them to complete the logout process.
+        If the user is not logged out and the contractor is logged out and a entry to the 
+        LogInformation node will be made in Firebase
     */
     $scope.logoutConfirmed = function () {
-
-    /* Getting the name and company information from the database for a particular pin number entered.*/
-
-
         var ref = firebase.database().ref();
         ref.child("Contractors").orderByChild("pin").equalTo($scope.logoutPin).once("value", function (snapshot) {
             var userData = snapshot.val();
@@ -159,51 +159,51 @@ angular.module('webApp.contractorLogin', ['ngRoute', 'angularMoment', 'firebase'
                 filterRefCon = rootRefCon.orderByChild('pin').equalTo($scope.logoutPin);
                 $scope.contractors = $firebaseArray(filterRefCon);
                 $scope.contractors.$loaded().then(function () {
-                    angular.forEach($scope.contractors, function (contractor) {
-                        var updateRef = firebase.database().ref().child('Contractors/' + contractor.$id);
-                        if (contractor.logStatus == 0) {
-                            console.log("You're Already Logged Out!!");
-                            alert("You're Already Logged Out...");
-                        }
-                        else if (contractor.logStatus == 1) {
-                            alert("Please confirm your information:\n\n" + "Name: " + contractor.name + "\n" + "Company: " + contractor.company);
-                            updateRef.update({
-                                logStatus: 0
+
+                    var updateRef = firebase.database().ref().child('Contractors/' + $scope.contractors[0].$id);
+                    if ($scope.contractors[0].logStatus == 0) {
+                        $("#logoutConfirmModal").modal('hide');
+                        $("#alreadyLoggedOutModal").modal('show');
+                    } else {
+                        updateRef.update({
+                            logStatus: 0
+                        }).then(function (ref) {
+                            $scope.$apply(function () {
+                                $("#logoutConfirmModal").modal('hide');
                             });
-                            var rootRefLog = firebase.database().ref().child('LogInformation');
-                            var filterRefLog = rootRefLog.orderByChild('pin').equalTo(contractor.pin);
-                            $scope.logInformation = $firebaseArray(filterRefLog);
-                            $scope.logInformation.$loaded().then(function () {
-                                angular.forEach($scope.logInformation, function (logStatuses) {
-                                    if (logStatuses.currentLoginStatus == 1) {
-                                        console.log("Found one");
-                                        var logoutTime = $filter('date')(new Date(), 'shortTime');
-                                        var startTime = moment(logStatuses.loginTime, "HH:mm a");
-                                        var endTime = moment(logoutTime, "HH:mm a");
-                                        var duration = moment.duration(endTime.diff(startTime));
-                                        var hours = parseInt(duration.asHours());
-                                        var minutes = parseInt(duration.asMinutes()) - hours * 60;
-                                        var totalHours = hours + 'hr ' + minutes + 'min';
-                                        var updateRefLog = firebase.database().ref().child('LogInformation/' + logStatuses.$id);
-                                        updateRefLog.update({
-                                            currentLoginStatus: 0
-                                            , logOutTime: logoutTime
-                                            , totalHours: totalHours
-                                        }).then(function (ref) {}, function (error) {
-                                            console.log(error);
-                                        });
-                                    }
-                                })
-                            });
-                            return;
-                        }
-                    })
+                        }, function (error) {
+                            console.log(error);
+                        });
+                        $("#loggedOutModal").modal('show');
+                        var rootRefLog = firebase.database().ref().child('LogInformation');
+                        var filterRefLog = rootRefLog.orderByChild('pin').equalTo($scope.contractors[0].pin);
+                        $scope.logInformation = $firebaseArray(filterRefLog);
+                        $scope.logInformation.$loaded().then(function () {
+                            angular.forEach($scope.logInformation, function (logStatuses) {
+                                if (logStatuses.currentLoginStatus == 1) {
+                                    var logoutTime = $filter('date')(new Date(), 'shortTime');
+                                    var startTime = moment(logStatuses.loginTime, "HH:mm a");
+                                    var endTime = moment(logoutTime, "HH:mm a");
+                                    var duration = moment.duration(endTime.diff(startTime));
+                                    var hours = parseInt(duration.asHours());
+                                    var minutes = parseInt(duration.asMinutes()) - hours * 60;
+                                    var totalHours = hours + 'hr ' + minutes + 'min';
+                                    var updateRefLog = firebase.database().ref().child('LogInformation/' + logStatuses.$id);
+                                    updateRefLog.update({
+                                        currentLoginStatus: 0,
+                                        logOutTime: logoutTime,
+                                        totalHours: totalHours
+                                    }).then(function (ref) {}, function (error) {
+                                        console.log(error);
+                                    });
+                                }
+                            })
+                        });
+                    }
+
                 });
+                $scope.logoutPin = "";
             }
-            else {
-                return alert("Wrong Pin. Please see admin.");
-            }
-            $scope.logoutPin = "";
         });
     };
 }]);

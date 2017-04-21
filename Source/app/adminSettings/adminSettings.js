@@ -29,17 +29,6 @@ angular.module('webApp.adminSettings', ['ngRoute', 'ngCsv', 'ngSanitize', 'fireb
             console.log(error);
         });
     };
-    /* Confirm before deleting */
-    $scope.finalizeDelete = function (deleteContractor) {
-        $scope.user.delete().then(function () {
-            $scope.$apply(function () {
-                $("#deleteModal").modal('hide');
-            });
-        }, function (error) {
-            console.log(error);
-        });
-        $location.path('/contractorAdmin');
-    };
     $scope.logout = function () {
         CommonProp.logoutUser();
     }

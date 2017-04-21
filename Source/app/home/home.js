@@ -25,7 +25,7 @@ angular.module('webApp.home', ['ngRoute', 'firebase']).config(['$routeProvider',
     $scope.contractorsTraining = $firebaseArray(rootRefCon);
     $scope.contractorsTraining.$loaded().then(function () {
         angular.forEach($scope.contractorsTraining, function (user) {
-            if (currentDate.isSame(moment(user.date, 'MM/DD/YYYY').add(11, 'months'), 'day') || currentDate.isAfter(moment(user.date, 'MM/DD/YYYY').add(11, 'months'), 'day')) {
+            if (currentDate.isSame(moment(user.date).add(11, 'months'), 'day') || currentDate.isAfter(moment(user.date).add(11, 'months'), 'day')) {
                 $scope.getArray.push({
                     "name": user.name,
                     "pin": user.pin,

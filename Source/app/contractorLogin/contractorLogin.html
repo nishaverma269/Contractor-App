@@ -25,12 +25,30 @@
                             <div class="form-group" ng-class="{'has-error': contractorForm.pin.$invalid && contractorForm.pin.$touched}">
                                 <label for="pin">PIN</label>
                                 <input type="text" name="pin" class="form-control" placeholder="Pin" ng-model="loginPin" ng-minlength="1" required=""> <small class="help-block" ng-show="contractorForm.pin.$error.minlength && contractorForm.pin.$touched">Please enter a valid PIN.</small> </div>
-                            <div class="form-group">
+                            <div class="form-group" >
                                 <button type="submit" class="btn btn-primary" ng-click="contractorLogin()">Login</button>
                             </div>
                         </div>
                     </div>
                 </form>
+            </div>
+            <!-- Modal for confirming the contractors information for login-->
+            <div id="loginConfirmModal" class="modal fade" role="dialog" >
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4>Confirming Contractor</h4> </div>
+                        <div class="modal-body">
+                            <p ng-model="name.conName">Name: {{name}}</p>
+                            <p>Company: {{company}}</p>
+                            <div class="modal-footer">
+                                <p>Does information above looks correct?</p>
+                                <button type="button" class="btn btn-sm btn-primary" ng-click="loginConfirmed()">Yes</button>
+                                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">No</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col-md-6">
                 <form role="form" name="contractorLogoutForm" ng-submit="contractorLogout()" novalidate="">
@@ -46,6 +64,108 @@
                         </div>
                     </div>
                 </form>
+            </div>
+            <!-- Modal for confirming the contractors information for logout-->
+            <div id="logoutConfirmModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4>Confirming Contractor</h4> </div>
+                        <div class="modal-body">
+                            <p>Name: {{name}}</p>
+                            <p>Company: {{company}}</p>
+                        </div>
+                        <div class="modal-footer">
+                            <p>Does information above looks correct?</p>
+                            <button type="button" class="btn btn-sm btn-primary" ng-click="logoutConfirmed()">Yes</button>
+                            <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">No</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+              <!-- Modal for showing login successful-->
+            <div id="loggedInModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4>Log in successful!</h4> </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Ok</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal for showing logout successful-->
+            <div id="loggedOutModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4>Log out successful!</h4> </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Ok</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+              <!-- Modal for displaying the wrong pin error message. -->
+            <div id="wrongPINModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4>PIN not correct</h4> </div>
+                        <div class="modal-body">
+                            <p>Please see Admin or try again.</p>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Ok</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+              <!-- Modal for displaying the already logged in  error message. -->
+            <div id="alreadyLoggedInModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4>Already Logged In</h4> </div>
+                        <div class="modal-body">
+                            <p>Please see Admin for any concern.</p>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Ok</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <!-- Modal for displaying the safety training  error message. -->
+            <div id="safetyTrainingModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4>Safety Training needs to be updated</h4> </div>
+                        <div class="modal-body">
+                            <p>Please see Admin.</p>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Ok</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+              <!-- Modal for displaying the already logged out  error message. -->
+            <div id="alreadyLoggedOutModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4>Already Logged Out</h4> </div>
+                        <div class="modal-body">
+                            <p>Please see Admin for any concern.</p>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Ok</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
