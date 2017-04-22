@@ -16,7 +16,7 @@ angular.module('webApp.register', ['ngRoute', 'firebase']).config(['$routeProvid
         $location.path('/welcome');
     }
     /*
-        Function used to sign up an admin. Requires a email and password from the model. 
+        Function used to sign up an admin. Requires an email and password from the model. 
     */
     $scope.signUp = function () {
         var username = $scope.user.email;

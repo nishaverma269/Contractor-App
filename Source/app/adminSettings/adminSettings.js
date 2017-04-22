@@ -6,7 +6,7 @@ angular.module('webApp.adminSettings', ['ngRoute', 'ngCsv', 'ngSanitize', 'fireb
     });
 }]).controller('adminSettingsCtrl', ['$scope', '$firebaseArray', '$location', 'CommonProp', function ($scope, $firebaseArray, $location, CommonProp) {
     /*
-        adminSettingsCtrl allows an admin to update their own profile or delete their own profile if needed. 
+        adminSettingsCtrl allows an admin to update their own profile.
     */
     /*
         If user is not authenticated, bring them back to the welcome page.

@@ -19,26 +19,30 @@ angular.module('webApp.contractorLogin', ['ngRoute', 'angularMoment', 'firebase'
         If they are, a modal will pop up to finish the login. 
     */
     $scope.contractorLogin = function () {
+        /*
+            Make sure that Scope has the correct values to show to contractors, such as name and company.
+        */
         var ref = firebase.database().ref();
+        var rootRef = firebase.database().ref();
+        var conRef = rootRef.child('Contractors').orderByChild("pin").equalTo($scope.loginPin);
+        var fbArray = $firebaseArray(conRef);
+        fbArray.$loaded().then(function () {
+            /*
+                If the firebaseArray has no values, or no contractor has the PIN that was entered. 
+            */
+            if (typeof fbArray[0] !== 'undefined') {
+                $scope.name = fbArray[0].name;
+                $scope.company = fbArray[0].company;
+            }
+
+        });
         ref.child('Contractors').orderByChild("pin").equalTo($scope.loginPin).once("value", function (snapshot) {
             var userData = snapshot.val();
-            // If the pin is correct...
+            // If the pin is correct, show the loginConfirmModal
             if (userData) {
-                snapshot.forEach(function (childSnapshot) {
-                    var value = childSnapshot.val();
-                    $scope.name = value.name;
-                    $scope.company = value.company;
-                   
-                });
-                // Used to open up modal.
-                 var modalInstance = $uibModal.open({
-                        component: 'myModal',
-                        controller: "contractorLoginCtrl",
-                        scope: $scope //passed current scope to the modal
-                    });
                 $("#loginConfirmModal").modal('show');
             } else {
-                //Shown if the pin does not show in the system. 
+                //Shown if the pin does not exist in the system
                 $("#wrongPINModal").modal('show');
             }
         });
@@ -49,27 +53,27 @@ angular.module('webApp.contractorLogin', ['ngRoute', 'angularMoment', 'firebase'
         If they are, a modal will pop up to finish the logout. 
     */
     $scope.contractorLogout = function () {
+        /*
+            Make sure that Scope has the correct values to show to contractors, such as name and company.
+        */
         var ref = firebase.database().ref();
+        var rootRef = firebase.database().ref();
+        var conRef = rootRef.child('Contractors').orderByChild("pin").equalTo($scope.logoutPin);
+        var fbArray = $firebaseArray(conRef);
+        fbArray.$loaded().then(function () {
+            /*
+                If the firebaseArray has no values, or no contractor has the PIN that was entered. 
+            */
+            if (typeof fbArray[0] !== 'undefined') {
+                $scope.name = fbArray[0].name;
+                $scope.company = fbArray[0].company;
+            }
+
+        });
         ref.child('Contractors').orderByChild("pin").equalTo($scope.logoutPin).once("value", function (snapshot) {
             var userData = snapshot.val();
-            // If the pin is correct...
+            // If the pin is correct, show the logoutConfirmModal.
             if (userData) {
-                snapshot.forEach(function (childSnapshot) {
-                    var value = childSnapshot.val();
-                    $scope.name = value.name;
-                    $scope.company = value.company;
-                    var modalInstance = $uibModal.open({
-                        component: 'myModal',
-                        controller: "contractorLoginCtrl",
-                        scope: $scope //passed current scope to the modal
-                    });
-                });
-                // Used to open modal.
-                 var modalInstance = $uibModal.open({
-                        component: 'myModal',
-                        controller: "contractorLoginCtrl",
-                        scope: $scope //passed current scope to the modal
-                    });
                 $("#logoutConfirmModal").modal('show');
             } else {
                 //Shown if the pin does not exist in the system. 
@@ -139,7 +143,6 @@ angular.module('webApp.contractorLogin', ['ngRoute', 'angularMoment', 'firebase'
 
                 });
                 $scope.loginPin = "";
-                //console.log($scope.contractors.name);
             }
         });
     };
